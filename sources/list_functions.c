@@ -21,34 +21,66 @@ t_stack			*ft_create_elem(int data)
 	tmp->data = data;
 	tmp->up = NULL;
 	tmp->down = NULL;
-	return(tmp);
+	return (tmp);
 }
 
-void		ft_push_down(t_stack **top, int data)
+void			ft_push_down(t_stack **top, int data)
 {
 	add(top, ft_create_elem(data));
 	*top = (*top)->down;
-	/*t_stack		*tmp;
+}
 
-	if (!(*top)->up && !(*top)->down)
+void			ft_push_up(t_stack **top, int data)
+{
+	add(top, ft_create_elem(data));
+}
+
+void			add(t_stack **top, t_stack *tmp)
+{
+	if (*top == NULL)
 	{
-		(*top)->up = ft_create_elem(data);
-		(*top)->down = (*top)->up;
-		(*top)->up->up = *top;
+		*top = tmp;
+		(*top)->up = *top;
+		(*top)->down = *top;
+	}
+	else if ((*top)->down == *top)
+	{
+		(*top)->up = tmp;
+		(*top)->down = tmp;
 		(*top)->up->down = *top;
+		(*top)->down->up = *top;
+		*top = (*top)->up;
 	}
 	else
 	{
-		tmp = (*top)->up;
-		(*top)->up = ft_create_elem(data);
-		tmp->down = (*top)->up;
-		(*top)->up->up = tmp;
-		(*top)->up->down = *top;
-	}*/
+		(*top)->up->down = tmp;
+		(*top)->up->down->down = *top;
+		(*top)->up->down->up = (*top)->up;
+		(*top)->up = tmp;
+		*top = (*top)->up;
+	}
 }
 
-void		ft_push_up(t_stack **top, int data)
+t_stack			*del(t_stack **top)
 {
-	ft_push_down(top, data);
-	*top = (*top)->up;
+	t_stack		*tmp;
+
+	tmp = *top;
+	if (*top == NULL)
+		return (NULL);
+	if ((*top)->down == *top)
+		*top = NULL;
+	/*else if ((*top)->down->down == *top)
+	{
+		(*top)->down->up = (*top)->up;
+		*top = (*top)->down;
+		(*top)->down = *top;
+	}*/
+	else
+	{
+		(*top)->down->up = (*top)->up;
+		*top = (*top)->down;
+		(*top)->up->down = *top;
+	}
+	return (tmp);
 }
