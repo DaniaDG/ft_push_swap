@@ -26,7 +26,9 @@ t_stack			*ft_create_elem(int data)
 
 void		ft_push_down(t_stack **top, int data)
 {
-	t_stack		*tmp;
+	add(top, ft_create_elem(data));
+	*top = (*top)->down;
+	/*t_stack		*tmp;
 
 	if (!(*top)->up && !(*top)->down)
 	{
@@ -42,7 +44,7 @@ void		ft_push_down(t_stack **top, int data)
 		tmp->down = (*top)->up;
 		(*top)->up->up = tmp;
 		(*top)->up->down = *top;
-	}
+	}*/
 }
 
 void		ft_push_up(t_stack **top, int data)
