@@ -59,6 +59,12 @@ int		main(int argc, char **argv)
 	//print_stack(a);
 
 	push(&a, &b);
+	push(&a, &b);
+	push(&a, &b);
+	push(&a, &b);
+	push(&a, &b);
+	push(&a, &b);
+	push(&a, &b);
 	printf("*********************************\n");
 	//print_stack(a);
 	printf("*********************************\n");
