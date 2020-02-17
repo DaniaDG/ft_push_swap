@@ -70,12 +70,6 @@ t_stack			*del(t_stack **top)
 		return (NULL);
 	if ((*top)->down == *top)
 		*top = NULL;
-	/*else if ((*top)->down->down == *top)
-	{
-		(*top)->down->up = (*top)->up;
-		*top = (*top)->down;
-		(*top)->down = *top;
-	}*/
 	else
 	{
 		(*top)->down->up = (*top)->up;

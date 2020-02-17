@@ -30,6 +30,11 @@ void		swap(t_stack **top)
 {
 	if (*top == NULL || (*top)->down == *top)
 		return ;
+	if ((*top)->down->down == *top)
+	{
+		*top = (*top)->down;
+		return ;
+	}
 	(*top)->down->up = (*top)->up;
 	(*top)->up->down = (*top)->down;
 	(*top)->up = (*top)->down;
@@ -41,8 +46,7 @@ void		swap(t_stack **top)
 
 void		push(t_stack **top1, t_stack **top2)
 {
-	if (*top1 == NULL || *top2 == NULL ||
-		(*top1)->up == NULL || (*top2)->up == NULL || (*top1)->down == *top1)
+	if (*top1 == NULL || *top2 == NULL || (*top1)->down == *top1)
 	{
 		add(top2, del(top1));
 		return ;

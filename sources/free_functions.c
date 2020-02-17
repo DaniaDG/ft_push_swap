@@ -12,7 +12,7 @@
 
 #include "ft_push_swap.h"
 
-void		free(t_stack **top)
+void		free_stack(t_stack **top)
 {
 	t_stack		*begin;
 
@@ -24,6 +24,17 @@ void		free(t_stack **top)
 		(*top)->down = NULL;
 		ft_memdel((void**)top);
 	}
-	else if
-	begin = (*top)->up;
+	else
+	{
+		begin = (*top)->up;
+		(*top)->up->down = NULL;
+		(*top)->up = NULL;
+		while (*top != begin)
+		{
+			*top = (*top)->down;
+			(*top)->up->down = NULL;
+			ft_memdel((void**)&((*top)->up));
+		}
+	ft_memdel((void**)top);
+	}
 }

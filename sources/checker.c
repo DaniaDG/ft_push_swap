@@ -17,6 +17,11 @@ void	print_stack(t_stack *top)
 {
 	t_stack		*tmp;
 
+	if (!top)
+	{
+		printf("NULL\n");
+		return ;
+	}
 	tmp = top;
 	printf("%d\n", tmp->data);
 	tmp = tmp->down;
@@ -44,6 +49,45 @@ void	print_stack(t_stack *top)
 	}
 }
 
+int		check_digits(char *str)
+{
+	while (*str)
+	{
+		if (ft_strchr("+-0123456789\t ", *str) == NULL)
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+int		fill_stack(int argc, char **argv, t_stack **a)
+{
+	int		i;
+
+	i = 1;
+	while (i < argc)
+	{
+		if (!check_digits(argv[i]))
+			return (0);
+		while (*(argv[i]))
+		{
+			ft_push_down(a, ft_atoi(argv[i]));
+			while (*(argv[i]) == ' ' || *(argv[i]) == '\t')
+				argv[i]++;
+			if (*(argv[i]) == '-' || *(argv[i]) == '+')
+				argv[i]++;
+			while (*(argv[i]) != ' ' && *(argv[i]) != '\t' && *(argv[i]))
+			{
+				if (*(argv[i]) < '0' || *(argv[i]) > '9')
+					return (0);
+				argv[i]++;
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
 int		main(int argc, char **argv)
 {
 	t_stack		*a = NULL;
@@ -52,22 +96,18 @@ int		main(int argc, char **argv)
 
 	if (argc == 1)
 		return (0);
-	//if (!(a = ft_create_elem(ft_atoi(argv[i++]))))
-	//	return (0);
-	while (i < argc)
-		ft_push_down(&a, ft_atoi(argv[i++]));
-	//print_stack(a);
-
-	push(&a, &b);
-	push(&a, &b);
-	push(&a, &b);
-	push(&a, &b);
-	push(&a, &b);
-	push(&a, &b);
-	push(&a, &b);
+	if (!(fill_stack(argc, argv, &a)))
+	{
+		free_stack(&a);
+		printf("Error\n");
+		return (0);
+	}
+	print_stack(a);
+	swap(&a);
 	printf("*********************************\n");
-	//print_stack(a);
+	print_stack(a);
+	free_stack(&a);
 	printf("*********************************\n");
-	//print_stack(b);
+	print_stack(a);
 	return (0);
 }
