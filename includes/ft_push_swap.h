@@ -14,6 +14,8 @@
 # define FT_PUSH_SWAP_H
 
 # include "libft.h"
+# include "get_next_line.h"
+# include "limits.h"
 
 # define SA		"sa"
 # define SB		"sb"
@@ -38,7 +40,7 @@ t_stack					*ft_create_elem(int data);
 void					ft_push_down(t_stack **top, int data);
 void					ft_push_up(t_stack **top, int data);
 void					swap(t_stack **top);
-void					push(t_stack **top_1, t_stack **top_2);
+void					push(t_stack **top1, t_stack **top2);
 void					rotate(t_stack **top);
 void					reverse_rotate(t_stack **top);
 void					add(t_stack **top, t_stack *tmp);
