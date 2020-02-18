@@ -30,16 +30,36 @@ LIBFT_HEADERS_DIRECTORY = $(LIBFT_DIRECTORY)includes/
 HEADERS_LIST = ft_push_swap.h
 HEADERS_DIRECTORY = includes/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
+
+
 SOURCES_DIRECTORY = sources/
-SOURCES_LIST = checker.c free_functions.c list_functions.c operations.c  
-
-#   
-
+SOURCES_LIST = free_functions.c list_functions.c operations.c  
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
 OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))
 OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS_LIST))
+
+####
+
+#PS_SOURCES_DIRECTORY = sources/
+CH_SOURCES_LIST = checker.c 
+CH_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(CH_SOURCES_LIST))
+
+#PS_OBJECTS_DIRECTORY = objects/
+CH_OBJECTS_LIST = $(patsubst %.c, %.o, $(CH_SOURCES_LIST))
+CH_OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(CH_OBJECTS_LIST))
+
+
+# VIZUALIZER
+
+#VS_SOURCES_DIRECTORY = sources/
+VS_SOURCES_LIST = viz.c
+VS_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(VS_SOURCES_LIST))
+
+#VS_OBJECTS_DIRECTORY = objects/
+VS_OBJECTS_LIST = $(patsubst %.c, %.o, $(VS_SOURCES_LIST))
+VS_OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(VS_OBJECTS_LIST))
 
 # COLORS
 
@@ -49,12 +69,17 @@ RESET = \033[0m
 
 .PHONY: all clean fclean re
 
-all: $(NAME_CH)
+all: $(NAME_CH) $(NAME_VS)
 
-$(NAME_CH): $(LIBFT) $(OBJECTS_DIRECTORY) $(OBJECTS)
-	@$(CC) $(FLAGS) $(LIBFT) $(INCLUDES) $(OBJECTS) -o $(NAME_CH)
+$(NAME_CH): $(LIBFT) $(OBJECTS_DIRECTORY) $(OBJECTS) $(CH_OBJECTS)
+	@$(CC) $(FLAGS) $(LIBFT) $(INCLUDES) $(OBJECTS) $(CH_OBJECTS) -o $(NAME_CH)
 	@echo "\n$(NAME_CH): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_CH): $(GREEN)$(NAME_CH) was created$(RESET)"
+
+$(NAME_VS): $(LIBFT) $(OBJECTS_DIRECTORY) $(OBJECTS) $(VS_OBJECTS)
+	@$(CC) $(FLAGS) $(LIBFT) $(INCLUDES) $(OBJECTS) $(VS_OBJECTS) -o $(NAME_VS)
+	@echo "\n$(NAME_VS): $(GREEN)object files were created$(RESET)"
+	@echo "$(NAME_VS): $(GREEN)$(NAME_VS) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
@@ -63,6 +88,7 @@ $(OBJECTS_DIRECTORY):
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
 	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
 	@echo "$(GREEN).$(RESET)\c"
+
 
 $(LIBFT):
 	@echo "$(NAME_CH): $(GREEN)Creating $(LIBFT)...$(RESET)"
@@ -74,12 +100,15 @@ clean:
 	@rm -rf $(OBJECTS_DIRECTORY)
 	@echo "$(NAME_CH): $(RED)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
 	@echo "$(NAME_CH): $(RED)object files were deleted$(RESET)"
+	@echo "$(NAME_VS): $(RED)object files were deleted$(RESET)"
 
 fclean: clean
 	@rm -f $(LIBFT)
 	@echo "$(NAME_CH): $(RED)$(LIBFT) was deleted$(RESET)"
 	@rm -f $(NAME_CH)
 	@echo "$(NAME_CH): $(RED)$(NAME_CH) was deleted$(RESET)"
+	@rm -f $(NAME_VS)
+	@echo "$(NAME_VS): $(RED)$(NAME_VS) was deleted$(RESET)"
 
 re:
 	@$(MAKE) fclean
