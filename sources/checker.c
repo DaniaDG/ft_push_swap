@@ -196,13 +196,6 @@ int		check_duplicate(t_stack *top)
 	return (1);
 }
 
-void	error_exit(t_stack **a, t_stack **b)
-{
-	free_stack(a);
-	free_stack(b);
-	printf("Error\n");
-	exit (1);
-}
 
 int		main(int argc, char **argv)
 {
@@ -210,23 +203,17 @@ int		main(int argc, char **argv)
 	t_stack		*b = NULL;
 	char		*end = NULL;
 
-	printf("%ld\n", ft_strtol("123456+789", &end));
-	printf("%s\n", end);
 	if (argc == 1)
 		return (0);
 	if (!(fill_stack(argc, argv, &a)))
-		error_exit(&a, &b);
+		str_exit(&a, &b, 2);
 	if (!(check_duplicate(a)))
-		error_exit(&a, &b);
+		str_exit(&a, &b, 2);
 	if (!(read_from_stdin(&a, &b)))
-		error_exit(&a, &b);
+		str_exit(&a, &b, 2);
 	if (!(checker(&a, &b)))
-		printf("\033[031mKO\n");
+		str_exit(&a, &b, 0);
 	else
-		printf("\033[032mOK\n");
-	write(1, "\033[0m", 6);
-	print_stack(a);
-	free_stack(&a);
-	free_stack(&b);
+		str_exit(&a, &b, 1);
 	return (0);
 }

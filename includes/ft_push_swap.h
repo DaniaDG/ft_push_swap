@@ -46,5 +46,6 @@ void					reverse_rotate(t_stack **top);
 void					add(t_stack **top, t_stack *tmp);
 t_stack					*del(t_stack **top);
 void					free_stack(t_stack **top);
+void					str_exit(t_stack **a, t_stack **b, int msg);
 
 #endif

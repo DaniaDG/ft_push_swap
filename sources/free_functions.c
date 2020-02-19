@@ -38,3 +38,17 @@ void		free_stack(t_stack **top)
 	ft_memdel((void**)top);
 	}
 }
+
+void		str_exit(t_stack **a, t_stack **b, int msg)
+{
+	free_stack(a);
+	free_stack(b);
+	if (msg == 0)
+		write(1, "\033[031mKO\n", 10);
+	if (msg == 1)
+		write(1, "\033[032mOK\n", 10);
+	if (msg == 2)
+		write(1, "\033[033mERROR\n", 13);
+	write(1, "\033[0m", 5);
+	exit (1);
+}
