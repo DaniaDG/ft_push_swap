@@ -48,4 +48,9 @@ t_stack					*del(t_stack **top);
 void					free_stack(t_stack **top);
 void					str_exit(t_stack **a, t_stack **b, int msg);
 
+int						checker(t_stack **a, t_stack **b);
+int						check_duplicate(t_stack *top);
+int						read_from_stdin(t_stack **a, t_stack **b);
+int						fill_stack(int argc, char **argv, t_stack **a);
+
 #endif

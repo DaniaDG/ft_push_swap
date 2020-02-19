@@ -29,16 +29,21 @@
 # define WIDTH		1000
 # define MAX_NUM	100
 
-typedef struct		s_visual
+typedef struct		s_image
 {
-	void			*mlx;
-	void			*win;
 	void			*img;
-	void			*img1;
 	char			*data_addr;
 	int				bits_per_pixel;
 	int				size_line;
 	int				endian;
+}					t_image;
+
+typedef struct		s_visual
+{
+	void			*mlx;
+	void			*win;
+	t_image			*image;
+	
 }					t_visual;
 
 t_visual			*init_ptr(void);

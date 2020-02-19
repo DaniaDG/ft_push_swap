@@ -40,7 +40,8 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 
 SOURCES_DIRECTORY = sources/
-SOURCES_LIST = free_functions.c list_functions.c operations.c  
+SOURCES_LIST = free_functions.c list_functions.c operations.c \
+check_functions.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
