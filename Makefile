@@ -15,10 +15,10 @@ NAME_CH = checker
 NAME_VS = visualizer
 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -g
 LIBRARIES = -lmlx -lm -lft -L$(LIBFT_DIRECTORY) -L$(MINILIBX_DIRECTORY) -framework OpenGL -framework AppKit
 INCLUDES = -I $(HEADERS_DIRECTORY) -I $(LIBFT_HEADERS_DIRECTORY) -I$(MINILIBX_HEADERS)
-
+#-Wall -Werror -Wextra
 # LIBFT
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
@@ -54,7 +54,6 @@ OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS_LIST))
 CH_SOURCES_LIST = checker.c 
 CH_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(CH_SOURCES_LIST))
 
-#PS_OBJECTS_DIRECTORY = objects/
 CH_OBJECTS_LIST = $(patsubst %.c, %.o, $(CH_SOURCES_LIST))
 CH_OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(CH_OBJECTS_LIST))
 
@@ -65,9 +64,16 @@ CH_OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(CH_OBJECTS_LIST))
 VS_SOURCES_LIST = viz.c
 VS_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(VS_SOURCES_LIST))
 
-#VS_OBJECTS_DIRECTORY = objects/
 VS_OBJECTS_LIST = $(patsubst %.c, %.o, $(VS_SOURCES_LIST))
 VS_OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(VS_OBJECTS_LIST))
+
+
+PS_SOURCES_LIST = push_swap.c
+PS_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(PS_SOURCES_LIST))
+
+PS_OBJECTS_LIST = $(patsubst %.c, %.o, $(PS_SOURCES_LIST))
+PS_OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(PS_OBJECTS_LIST))
+
 
 # COLORS
 
@@ -77,7 +83,7 @@ RESET = \033[0m
 
 .PHONY: all clean fclean re
 
-all: $(NAME_CH) $(NAME_VS)
+all: $(NAME_CH) $(NAME_VS) $(NAME_PS)
 
 $(NAME_CH): $(LIBFT) $(MINILIBX) $(OBJECTS_DIRECTORY) $(OBJECTS) $(CH_OBJECTS)
 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(CH_OBJECTS) -o $(NAME_CH)
@@ -88,6 +94,11 @@ $(NAME_VS): $(LIBFT) $(MINILIBX) $(OBJECTS_DIRECTORY) $(OBJECTS) $(VS_OBJECTS)
 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(VS_OBJECTS) -o $(NAME_VS)
 	@echo "\n$(NAME_VS): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_VS): $(GREEN)$(NAME_VS) was created$(RESET)"
+
+$(NAME_PS): $(LIBFT) $(MINILIBX) $(OBJECTS_DIRECTORY) $(OBJECTS) $(PS_OBJECTS)
+	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(PS_OBJECTS) -o $(NAME_PS)
+	@echo "\n$(NAME_VS): $(GREEN)object files were created$(RESET)"
+	@echo "$(NAME_PS): $(GREEN)$(NAME_PS) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)

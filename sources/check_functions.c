@@ -12,40 +12,41 @@
 
 #include "ft_push_swap.h"
 
-void	print_stack(t_stack *top)
+void	print_stack(t_stack *a, t_stack *b)
 {
 	t_stack		*tmp;
 
-	if (!top)
+	if (!a)
+		printf("a = NULL\n");
+	else
 	{
-		printf("NULL\n");
-		return ;
-	}
-	tmp = top;
-	printf("%d\n", tmp->data);
-	tmp = tmp->down;
-	while (tmp != top)
-	{
-		printf("%d\n", tmp->data);
+		tmp = a;
+		printf("%d (%s) i = %d\n", tmp->data, tmp->status == TRUE ? "true" : "false", tmp->index);
 		tmp = tmp->down;
+		while (tmp != a)
+		{
+			printf("%d (%s) i = %d\n", tmp->data, tmp->status == TRUE ? "true" : "false", tmp->index);
+			tmp = tmp->down;
+		}
+		printf("--\n");
+		printf("a\n");
 	}
-
-	printf("\t%d\n", tmp->data);
-	tmp = tmp->down;
-	while (tmp != top)
+	if (!b)
+		printf("\tb = NULL\n");
+	else
 	{
-		printf("\t%d\n", tmp->data);
+		tmp = b;
+		printf("\t%d (%s) i = %d\n", tmp->data, tmp->status == TRUE ? "true" : "false", tmp->index);
 		tmp = tmp->down;
+		while (tmp != b)
+		{
+				printf("\t%d (%s) i = %d\n", tmp->data, tmp->status == TRUE ? "true" : "false", tmp->index);
+				tmp = tmp->down;
+		}
+		printf("\t--\n");
+		printf("\tb\n");
 	}
-
-	
-	printf("\t\t%d\n", tmp->data);
-	tmp = tmp->down;
-	while (tmp != top)
-	{
-		printf("\t\t%d\n", tmp->data);
-		tmp = tmp->down;
-	}
+	printf("\n");
 }
 
 int		check_digits(char *str)
@@ -185,7 +186,7 @@ int		check_duplicate(t_stack *top)
 	t_stack		*tmp2;
 	int			i;
 
-	i = 0;
+	i = 1;
 	if (top == NULL || top->down == top)
 		return (1);
 	tmp1 = top->down;
@@ -203,3 +204,52 @@ int		check_duplicate(t_stack *top)
 	}
 	return (i);
 }
+
+int		get_status(t_stack *top)
+{
+	t_stack	*tmp;
+	int		max;
+	int		i = 1;
+
+	top->status = TRUE;
+	max = top->data;
+	tmp = top->down;
+	//check 1 and 2 elemets
+	while (tmp != top)
+	{
+		if (tmp->data > max)
+		{
+			tmp->status = TRUE;
+			max = tmp->data;
+			i++;
+		}
+		else
+			tmp->status = FALSE;
+		tmp = tmp->down;
+	}
+	return (i);
+}
+
+t_stack		*get_markup(t_stack *top)
+{
+	t_stack		*tmp;
+	t_stack		*max;
+	int			max_t;
+	int			t;
+
+	tmp = top->down;
+	max = top;
+	max_t = get_status(top);
+	while (tmp != top)
+	{
+		if ((t = get_status(tmp)) > max_t)
+		{
+			max_t = t;
+			max = tmp;
+		}
+		tmp = tmp->down;
+	}
+	return (max);
+}
+
+

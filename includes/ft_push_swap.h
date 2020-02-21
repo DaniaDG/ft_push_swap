@@ -29,12 +29,22 @@
 # define RRB	"rrb"
 # define RRR	"rrr"
 
+typedef enum
+{
+	TRUE,
+	FALSE
+}	t_bool;
+
 typedef struct			s_stack
 {
 	int					data;
+	int					index;
+	t_bool				status;
 	struct s_stack		*up;
 	struct s_stack		*down;
 }						t_stack;
+
+
 
 t_stack					*ft_create_elem(int data);
 void					ft_push_down(t_stack **top, int data);
@@ -53,4 +63,8 @@ int						check_duplicate(t_stack *top);
 int						read_from_stdin(t_stack **a, t_stack **b);
 int						fill_stack(int argc, char **argv, t_stack **a);
 
+
+int						get_status(t_stack *top);
+void					print_stack(t_stack *a, t_stack *b);
+t_stack					*get_markup(t_stack *top);
 #endif

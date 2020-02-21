@@ -19,6 +19,7 @@ t_stack			*ft_create_elem(int data)
 	if (!(tmp = (t_stack*)malloc(sizeof(t_stack))))
 		return (NULL);
 	tmp->data = data;
+	tmp->index = 0;
 	tmp->up = NULL;
 	tmp->down = NULL;
 	return (tmp);
