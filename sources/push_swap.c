@@ -60,10 +60,68 @@ int		all_true(t_stack *top)
 	return (1);
 }
 
+int		len_stack(t_stack *top)
+{
+	t_stack		*tmp;
+	int			len;
 
+	if (top == NULL)
+		return (0);
+	len = 1;
+	tmp = top->down;
+	while (tmp != top)
+	{
+		tmp = tmp->down;
+		len++;
+	}
+	return (len);
+}
+
+t_stack	*coose_b(t_stack *a, t_stack *b)
+{
+	int		ra = 1;
+	int		rb = 1;
+	t_stack	*tmp_a;
+	t_stack	*tmp_b;
+
+	tmp_a = a;
+	tmp_b = b;
+
+	while (tmp_b != b->up)
+	{
+		ra++;
+	}
+	return (tmp_b);
+}
+void	get_max_min(t_stack *top, int *max, int *min)
+{
+	t_stack	*tmp;
+
+	*max = top->index;
+	*min = top->index;
+	tmp = top->down;
+	while (tmp != top)
+	{
+		if (tmp->index > *max)
+			*max = tmp->index;
+		else if (tmp->index < *min)
+			*min = tmp->index;
+		tmp = tmp->down;
+	}
+}
 
 void	sort(t_stack **a, t_stack **b, t_stack **markup)
 {
+	int		len;
+	int		t;
+	int		t2;
+	int		max;
+	int		min;
+
+	len = len_stack(*a);
+	t = get_status(*markup);
+	max = len;
+	min = 1;
 	while (!all_true(*a))
 	{
 		while ((*a)->status == TRUE)
@@ -71,17 +129,13 @@ void	sort(t_stack **a, t_stack **b, t_stack **markup)
 		while ((*a)->status == FALSE)
 		{
 			print_stack(*a, *b);
-			if ((*a)->data > (*a)->down->data && (*a)->down->status == FALSE)
-			{
-				swap(a);
-				get_status(*markup);
-				print_stack(*a, *b);
-			}
 			if ((*a)->status == FALSE)
 			{
 				push(a, b);
 				print_stack(*a, *b);
 			}
+			get_max_min(*a, &max, &min);
+			printf("\t\tmax = %d, min = %d\n", max, min);
 		}
 		//choose b
 	}
@@ -89,23 +143,24 @@ void	sort(t_stack **a, t_stack **b, t_stack **markup)
 
 int		main(int argc, char **argv)
 {
-	t_stack		*a = NULL;
-	t_stack		*b = NULL;
-	t_stack		*markup;
+	t_ps		*ps;
 	int			len;
 
 	if (argc == 1)
 		return (0);
-	if (!(fill_stack(argc, argv, &a)))
-		str_exit(&a, &b, 2);
-	if (!(len = check_duplicate(a)))
-		str_exit(&a, &b, 2);
+	ps = (t_ps *)malloc(sizeof(t_ps));
+	ps->a = NULL;
+	ps->b = NULL;
+	if (!(fill_stack(argc, argv, &ps->a)))
+		str_exit(&ps->a, &ps->b, 2);
+	if (!(len = check_duplicate(ps->a)))
+		str_exit(&ps->a, &ps->b, 2);
 	printf("len = %d\n", len);
-	markup = get_markup(a);
-	get_index(a, len);
-	get_status(markup);
-	print_stack(a, b);
-	sort(&a, &b, &markup);
+	ps->markup = get_markup(ps->a);
+	get_index(ps->a, len);
+	get_status(ps->markup);
+	print_stack(ps->a, ps->b);
+	sort(&ps->a, &ps->b, &ps->markup);
 	//rotate(&a);
 	//print_stack(a, b);
 

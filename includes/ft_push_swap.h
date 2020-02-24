@@ -44,6 +44,13 @@ typedef struct			s_stack
 	struct s_stack		*down;
 }						t_stack;
 
+typedef struct			s_ps
+{
+	t_stack				*a;
+	t_stack				*b;
+	t_stack				*markup;
+}						t_ps;
+
 
 
 t_stack					*ft_create_elem(int data);
@@ -54,7 +61,7 @@ void					push(t_stack **top1, t_stack **top2);
 void					rotate(t_stack **top);
 void					reverse_rotate(t_stack **top);
 void					add(t_stack **top, t_stack *tmp);
-t_stack					*del(t_stack **top);
+t_stack					*cut(t_stack **top);
 void					free_stack(t_stack **top);
 void					str_exit(t_stack **a, t_stack **b, int msg);
 

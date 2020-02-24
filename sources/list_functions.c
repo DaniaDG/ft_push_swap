@@ -62,7 +62,7 @@ void			add(t_stack **top, t_stack *tmp)
 	}
 }
 
-t_stack			*del(t_stack **top)
+t_stack			*cut(t_stack **top)
 {
 	t_stack		*tmp;
 

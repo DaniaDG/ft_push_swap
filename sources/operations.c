@@ -48,7 +48,7 @@ void		push(t_stack **top1, t_stack **top2)
 {
 	if (*top1 == NULL || *top2 == NULL || (*top1)->down == *top1)
 	{
-		add(top2, del(top1));
+		add(top2, cut(top1));
 		return ;
 	}
 	(*top1)->up->down = (*top1)->down;
