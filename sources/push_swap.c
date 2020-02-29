@@ -12,6 +12,11 @@
 
 #include "ft_push_swap.h"
 
+int		ft_abs(int a)
+{
+	return (a >= 0 ? a : -a);
+}
+
 void	get_index(t_stack *top, int len)
 {
 	int		i;
@@ -77,22 +82,6 @@ int		len_stack(t_stack *top)
 	return (len);
 }
 
-t_stack	*coose_b(t_stack *a, t_stack *b)
-{
-	int		ra = 1;
-	int		rb = 1;
-	t_stack	*tmp_a;
-	t_stack	*tmp_b;
-
-	tmp_a = a;
-	tmp_b = b;
-
-	while (tmp_b != b->up)
-	{
-		ra++;
-	}
-	return (tmp_b);
-}
 void	get_max_min(t_stack *top, int *max, int *min)
 {
 	t_stack	*tmp;
@@ -110,34 +99,203 @@ void	get_max_min(t_stack *top, int *max, int *min)
 	}
 }
 
+t_stack		*find_place(t_stack *a, t_stack *b)
+{
+	t_stack		*tmp;
+	t_stack		*res;
+	int			diff;
+	int			diff_tmp;
+
+	tmp = a->down;
+	res = a;
+	diff = b->index - a->index;
+	while (tmp != a)
+	{
+		diff_tmp = b->index - tmp->index;
+		if (ft_abs(diff_tmp) < ft_abs(diff))
+		{
+			diff = diff_tmp;
+			res = tmp;
+		}
+		tmp = tmp->down;
+	}
+	//printf("b = %d, diff = %d, place = %d\n", b->index, diff, diff < 0 ? res->index : res->down->index);
+	return (diff < 0 ? res : res->down);
+}
+
+t_stack	*choose_b(t_stack *a, t_stack *b, t_op_count *op_count)
+{
+	t_stack		*tmp_b;
+	t_stack		*tmp_a;
+	t_stack		*place;
+	t_stack		*res;
+	int			ra = 0;
+	int			rra = 0;
+	int			rb = 0;
+	int			rrb = 0;
+	int			all;
+	int			all_tmp;
+
+	tmp_b = b->down;
+	place = find_place(a, b);
+	//printf("place = %d\n", place->index);
+	res = b;
+	tmp_a = a;
+	rra = len_stack(a);
+	while (tmp_a != place)
+	{
+		ra++;
+		rra--;
+		tmp_a = tmp_a->down;
+	}
+	all = ra < rra ? ra : rra;
+	rrb = len_stack(b);
+	op_count->ra = ra;
+	op_count->rra = rra;
+	op_count->rb = rb;
+	op_count->rrb = rrb;
+	while (tmp_b != b)
+	{
+		place = find_place(a, tmp_b);
+		ra = 0;
+		rra = len_stack(a);
+		tmp_a = a;
+		while (tmp_a != place)
+		{
+			ra++;
+			rra--;
+			tmp_a = tmp_a->down;
+		}
+		rb++;
+		rrb--;
+		all_tmp = ra < rra ? ra : rra;
+		all_tmp +=  rb < rrb ? rb : rrb;
+		if (all_tmp < all)
+		{
+			all = all_tmp;
+			res = tmp_b;
+			op_count->ra = ra;
+			op_count->rra = rra;
+			op_count->rb = rb;
+			op_count->rrb = rrb;
+			//printf("place = %d\n", place->index);
+		}
+		tmp_b = tmp_b->down;
+	}
+	return (res);
+}
+
+void		find_first_elem(t_stack *a, t_op_count *op_count)
+{
+	t_stack		*tmp;
+
+	tmp = a;
+	op_count->ra = 0;
+	op_count->rra = len_stack(a);
+	while (tmp->index != 1)
+	{
+		op_count->ra++;
+		op_count->rra--;
+		tmp = tmp->down;
+	}
+}
+
 void	sort(t_stack **a, t_stack **b, t_stack **markup)
 {
 	int		len;
 	int		t;
-	int		t2;
-	int		max;
-	int		min;
+	int		count;
+	t_stack	*tmp_b;
+	t_stack	*place;
+	t_op_count	op_count;
 
 	len = len_stack(*a);
 	t = get_status(*markup);
-	max = len;
-	min = 1;
+
 	while (!all_true(*a))
 	{
 		while ((*a)->status == TRUE)
+		{
 			rotate(a);
+			printf("ra\n");
+		}
 		while ((*a)->status == FALSE)
 		{
-			print_stack(*a, *b);
+			//print_stack(*a, *b);
 			if ((*a)->status == FALSE)
 			{
 				push(a, b);
-				print_stack(*a, *b);
+				printf("pb\n");
+				//print_stack(*a, *b);
 			}
-			get_max_min(*a, &max, &min);
-			printf("\t\tmax = %d, min = %d\n", max, min);
 		}
-		//choose b
+		//printf("choose b %d\n", (coose_b(*a, *b))->index);
+	}
+	while (*b)
+	{
+		tmp_b = choose_b(*a, *b, &op_count);
+		//printf("choose b %d\n", tmp_b->index);
+		//printf("ra = %u, rra = %u, rb = %u, rrb = %u\n", op_count.ra, op_count.rra, op_count.rb, op_count.rrb);
+		if (op_count.ra < op_count.rra)
+		{
+			while (op_count.ra > 0)
+			{
+				rotate(a);
+				op_count.ra--;
+				printf("ra\n");
+			}
+		}
+		else
+		{
+			while (op_count.rra > 0)
+			{
+				reverse_rotate(a);
+				op_count.rra--;
+				printf("rra\n");
+			}
+		}
+		if (op_count.rb < op_count.rrb)
+		{
+			while (op_count.rb > 0)
+			{
+				rotate(b);
+				op_count.rb--;
+				printf("rb\n");
+			}
+		}
+		else
+		{
+			while (op_count.rrb > 0)
+			{
+				reverse_rotate(b);
+				op_count.rrb--;
+				printf("rrb\n");
+			}
+		}
+		push(b, a);
+		//print_stack(*a, *b);
+		printf("pb\n");
+		//sleep(2);
+		//get_status(*markup);
+	}
+	find_first_elem(*a, &op_count);
+	if (op_count.ra < op_count.rra)
+	{
+		while (op_count.ra > 0)
+		{
+			rotate(a);
+			op_count.ra--;
+			printf("ra\n");
+		}
+	}
+	else
+	{
+		while (op_count.rra > 0)
+		{
+			reverse_rotate(a);
+			op_count.rra--;
+			printf("rra\n");
+		}
 	}
 }
 
@@ -155,14 +313,15 @@ int		main(int argc, char **argv)
 		str_exit(&ps->a, &ps->b, 2);
 	if (!(len = check_duplicate(ps->a)))
 		str_exit(&ps->a, &ps->b, 2);
-	printf("len = %d\n", len);
+	//printf("len = %d\n", len);
 	ps->markup = get_markup(ps->a);
 	get_index(ps->a, len);
 	get_status(ps->markup);
-	print_stack(ps->a, ps->b);
+	//print_stack(ps->a, ps->b);
 	sort(&ps->a, &ps->b, &ps->markup);
+	//find_place(ps->a, ps->b);
 	//rotate(&a);
-	//print_stack(a, b);
+	print_stack(ps->a, ps->b);
 
 	return (0);
 }

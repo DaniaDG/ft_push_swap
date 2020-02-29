@@ -51,6 +51,13 @@ typedef struct			s_ps
 	t_stack				*markup;
 }						t_ps;
 
+typedef struct			s_op_count
+{
+	int					ra;
+	int					rra;
+	int					rb;
+	int					rrb;
+}						t_op_count;
 
 
 t_stack					*ft_create_elem(int data);
