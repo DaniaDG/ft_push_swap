@@ -238,6 +238,32 @@ void	sort(t_stack **a, t_stack **b, t_stack **markup)
 		//printf("ra = %u, rra = %u, rb = %u, rrb = %u\n", op_count.ra, op_count.rra, op_count.rb, op_count.rrb);
 		if (op_count.ra < op_count.rra)
 		{
+			if (op_count.rb < op_count.rrb)
+			{
+				while (op_count.ra && op_count.rb)
+				{
+					rotate(a);
+					rotate(b);
+					printf("rr\n");
+					op_count.ra--;
+					op_count.rb--;
+				}
+				while (op_count.rb > 0)
+				{
+					rotate(b);
+					op_count.rb--;
+					printf("rb\n");
+				}
+			}
+			else
+			{
+				while (op_count.rrb > 0)
+				{
+					reverse_rotate(b);
+					op_count.rrb--;
+					printf("rrb\n");
+				}
+			}
 			while (op_count.ra > 0)
 			{
 				rotate(a);
@@ -247,34 +273,42 @@ void	sort(t_stack **a, t_stack **b, t_stack **markup)
 		}
 		else
 		{
+			if (op_count.rb < op_count.rrb)
+			{
+				while (op_count.rb > 0)
+				{
+					rotate(b);
+					op_count.rb--;
+					printf("rb\n");
+				}
+			}
+			else
+			{
+				while (op_count.rra && op_count.rrb)
+				{
+					reverse_rotate(a);
+					reverse_rotate(b);
+					printf("rrr\n");
+					op_count.rra--;
+					op_count.rrb--;
+				}
+				while (op_count.rrb > 0)
+				{
+					reverse_rotate(b);
+					op_count.rrb--;
+					printf("rrb\n");
+				}
+			}
 			while (op_count.rra > 0)
 			{
 				reverse_rotate(a);
 				op_count.rra--;
 				printf("rra\n");
-			}
-		}
-		if (op_count.rb < op_count.rrb)
-		{
-			while (op_count.rb > 0)
-			{
-				rotate(b);
-				op_count.rb--;
-				printf("rb\n");
-			}
-		}
-		else
-		{
-			while (op_count.rrb > 0)
-			{
-				reverse_rotate(b);
-				op_count.rrb--;
-				printf("rrb\n");
-			}
+			}	
 		}
 		push(b, a);
 		//print_stack(*a, *b);
-		printf("pb\n");
+		printf("pa\n");
 		//sleep(2);
 		//get_status(*markup);
 	}
@@ -321,7 +355,7 @@ int		main(int argc, char **argv)
 	sort(&ps->a, &ps->b, &ps->markup);
 	//find_place(ps->a, ps->b);
 	//rotate(&a);
-	print_stack(ps->a, ps->b);
+	//print_stack(ps->a, ps->b);
 
 	return (0);
 }
