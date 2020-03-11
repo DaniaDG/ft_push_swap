@@ -59,6 +59,7 @@ typedef struct			s_op_count
 	int					rb;
 	int					rrb;
 	int					rrr;
+	int					all;
 }						t_op_count;
 
 
@@ -83,4 +84,13 @@ int						fill_stack(int argc, char **argv, t_stack **a);
 int						get_status(t_stack *top);
 void					print_stack(t_stack *a, t_stack *b);
 t_stack					*get_markup(t_stack *top);
+
+int						ft_min(int a, int b);
+t_op_count				count_num_of_operations(t_op_count *tmp);
+t_stack					*choose_b(t_stack *a, t_stack *b, t_op_count *op_count);
+t_stack					*find_position(t_stack *a, t_stack *b);
+t_op_count				assign_zero(void);
+t_op_count				assign_value(t_op_count tmp);
+int						len_stack(t_stack *top);
+int						sort_3(t_stack **a);
 #endif

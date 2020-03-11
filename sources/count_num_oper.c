@@ -12,66 +12,89 @@
 
 #include "ft_push_swap.h"
 
-int		count_num_of_operations(t_op_count *tmp)
+static t_op_count		case_0(t_op_count *tmp,  int rr, int rrr)
+{
+	t_op_count		t;
+
+	rrr = 0;
+	t.ra = tmp->ra - rr;
+	t.rb = tmp->rb - rr;
+	t.rr = rr;
+	t.rra = 0;
+	t.rrb = 0;
+	t.rrr = 0;
+	t.all = t.ra + t.rb + t.rr;
+	return (t);
+}
+
+static t_op_count		case_1(t_op_count *tmp,  int rr, int rrr)
+{
+	t_op_count		t;
+
+	rr = 0;
+	rrr = 0;
+	t.ra = tmp->ra;
+	t.rb = 0;
+	t.rr = 0;
+	t.rra = 0;
+	t.rrb = tmp->rrb;
+	t.rrr = 0;
+	t.all = t.ra + t.rrb; 
+	return (t);
+}
+
+static t_op_count		case_2(t_op_count *tmp,  int rr, int rrr)
+{
+	t_op_count		t;
+
+	rr = 0;
+	rrr = 0;
+	t.ra = 0;
+	t.rb = tmp->rb;
+	t.rr = 0;
+	t.rra = tmp->rra;
+	t.rrb = 0;
+	t.rrr = 0;
+	t.all = t.rb + t.rra; 
+	return (t);
+}
+
+static t_op_count		case_3(t_op_count *tmp,  int rr, int rrr)
+{
+	t_op_count		t;
+
+	rr = 0;
+	t.ra = 0;
+	t.rb = 0;
+	t.rr = 0;
+	t.rra = tmp->rra - rrr;
+	t.rrb = tmp->rrb - rrr;
+	t.rrr = rrr;
+	t.all = t.rra + t.rrb + t.rrr;
+	return (t);
+}
+
+t_op_count				count_num_of_operations(t_op_count *tmp)
 {
 	t_op_count	t[4];
-	int			res[5];
-	int		i = 0;
+	int			rr;
+	int			rrr;
+	int			i;
+	int 		res;
 
-	tmp->rr = tmp->ra && tmp->rb ? ft_min(tmp->ra, tmp->rb) : 0;
-	tmp->rrr = tmp->rra && tmp->rrb ? ft_min(tmp->rra, tmp->rrb) : 0;
-	//printf("111ra = %d, rra = %d, rb = %d, rrb = %d, rr = %d, rrr = %d\n", tmp->ra, tmp->rra, tmp->rb, tmp->rrb, tmp->rr, tmp->rrr);
-		
-	//case 0
-	t[0].ra = tmp->ra - tmp->rr;
-	t[0].rb = tmp->rb - tmp->rr;
-	t[0].rr = tmp->rr;
-	t[0].rra = 0;
-	t[0].rrb = 0;
-	t[0].rrr = 0;
-	res[0] = t[0].ra + t[0].rb + t[0].rr; 
-	//case 1
-	t[1].ra = tmp->ra;
-	t[1].rb = 0;
-	t[1].rr = 0;
-	t[1].rra = 0;
-	t[1].rrb = tmp->rrb;
-	t[1].rrr = 0;
-	res[1] = t[1].ra + t[1].rrb; 
-	//case 2
-	t[2].ra = 0;
-	t[2].rb = tmp->rb;
-	t[2].rr = 0;
-	t[2].rra = tmp->rra;
-	t[2].rrb = 0;
-	t[2].rrr = 0;
-	res[2] = t[2].rb + t[2].rra; 
-	//case 3
-	t[3].ra = 0;
-	t[3].rb = 0;
-	t[3].rr = 0;
-	t[3].rra = tmp->rra - tmp->rrr;
-	t[3].rrb = tmp->rrb - tmp->rrr;
-	t[3].rrr = tmp->rrr;
-	res[3] = t[3].rra + t[3].rrb + t[3].rrr;
-
-	res[4] = ft_min(ft_min(res[0], res[1]), ft_min(res[2], res[3]));
-
+	rr = tmp->ra && tmp->rb ? ft_min(tmp->ra, tmp->rb) : 0;
+	rrr = tmp->rra && tmp->rrb ? ft_min(tmp->rra, tmp->rrb) : 0;	
+	t[0] = case_0(tmp, rr, rrr);
+	t[1] = case_1(tmp, rr, rrr);
+	t[2] = case_2(tmp, rr, rrr);
+	t[3] = case_3(tmp, rr, rrr);
+	res = ft_min(ft_min(t[0].all, t[1].all), ft_min(t[2].all, t[3].all));
+	i = 0;
 	while (i < 4)
 	{
-		if (res[4] == res[i])
-		{
-			tmp->ra = t[i].ra;
-			tmp->rb = t[i].rb;
-			tmp->rr = t[i].rr;
-			tmp->rra = t[i].rra;
-			tmp->rrb = t[i].rrb;
-			tmp->rrr = t[i].rrr;
+		if (res == t[i].all)
 			break ;
-		}
 		i++;
 	}
-	//printf("111ra = %d, rra = %d, rb = %d, rrb = %d, rr = %d, rrr = %d\n", tmp->ra, tmp->rra, tmp->rb, tmp->rrb, tmp->rr, tmp->rrr);
-		
-	return (res[4]);
+	return (t[i]);
 }
