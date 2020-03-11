@@ -55,8 +55,10 @@ typedef struct			s_op_count
 {
 	int					ra;
 	int					rra;
+	int					rr;
 	int					rb;
 	int					rrb;
+	int					rrr;
 }						t_op_count;
 
 

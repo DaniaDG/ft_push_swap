@@ -68,7 +68,7 @@ VS_OBJECTS_LIST = $(patsubst %.c, %.o, $(VS_SOURCES_LIST))
 VS_OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(VS_OBJECTS_LIST))
 
 
-PS_SOURCES_LIST = push_swap.c
+PS_SOURCES_LIST = push_swap1.c
 PS_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(PS_SOURCES_LIST))
 
 PS_OBJECTS_LIST = $(patsubst %.c, %.o, $(PS_SOURCES_LIST))
