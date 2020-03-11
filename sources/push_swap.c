@@ -163,8 +163,8 @@ void		find_first_elem(t_stack *a, t_op_count *op_count)
 
 static void		check_swap_a(t_stack **a, t_stack *markup)
 {
-	//return ;
-	if ((*a)->down->index > (*a)->up->index)
+	if ((*a)->down->index > (*a)->up->index &&
+		(*a)->down->status == FALSE)
 	{
 		swap(a);
 		write(1, "sa\n", 3);
@@ -177,14 +177,13 @@ static void		pre_sort(t_stack **a, t_stack **b, t_stack *markup)
 	t_stack		*tmp_a;
 	int			len;
 
-	if (all_true(*a))
-		return ;
 	tmp_a = *a;
 	len = len_stack(*a);
 	while (len >= 0)
 	{
-		if ((*a)->down->status == FALSE)
-			check_swap_a(a, markup);
+		check_swap_a(a, markup);
+		if (all_true(*a))
+			return ;
 		while ((*a)->status == TRUE && len >= 0)
 		{
 			rotate(a);
@@ -266,14 +265,14 @@ void	sort(t_stack **a, t_stack **b, t_stack **markup)
 
 int		sort_3(t_stack **a)
 {
+	get_index(*a, 3);
+	print_stack(*a, NULL);
 	if ((*a)->index == 1 && (*a)->down->index == 3)
 	{
-		rotate(a);
-		write(1, "ra\n", 3);
 		swap(a);
 		write(1, "sa\n", 3);
-		reverse_rotate(a);
-		write(1, "rra\n", 4);
+		rotate(a);
+		write(1, "ra\n", 3);
 	}
 	else if ((*a)->index == 2)
 	{
@@ -286,7 +285,7 @@ int		sort_3(t_stack **a)
 		{
 			reverse_rotate(a);
 			write(1, "rra\n", 4);
-		}
+		}	
 	}
 	else if ((*a)->index == 3)
 	{
@@ -306,6 +305,51 @@ int		sort_3(t_stack **a)
 	return (0);
 }
 
+int		sort_4(t_stack **a, t_stack **b)
+{
+	t_stack		*tmp_a;
+	int			i;
+
+	tmp_a = *a;
+	i = 0;
+	get_index(*a, 4);
+	while (i < 4)
+	{
+		if (tmp_a->up->index - tmp_a->index == 1)
+			i++;
+		else
+			break ;
+		if (i == 4)
+				break ;
+		tmp_a = tmp_a->down;
+	}
+	while (i > 0)
+	{
+		rotate(a);
+		write(1, "ra\n", 3);
+		i--;
+	}
+	push(a, b);
+	write(1, "pb\n", 3);
+	sort_3(a);
+	
+	push(b, a);
+	write(1, "pa\n", 3);
+	if ((*a)->data > (*a)->up->data)
+	{
+		rotate(a);
+		write(1, "ra\n", 3);
+	}
+	else if ((*a)->data < (*a)->up->data && (*a)->data > (*a)->down->data)
+	{
+		swap(a);
+		write(1, "sa\n", 3);
+	}
+	
+	//print_stack(*a, *b);
+	return (0);
+}
+
 int		main(int argc, char **argv)
 {
 	t_ps		*ps;
@@ -320,13 +364,15 @@ int		main(int argc, char **argv)
 		str_exit(&ps->a, &ps->b, 2);
 	if (!(len = check_duplicate(ps->a)))
 		str_exit(&ps->a, &ps->b, 2);
-	get_index(ps->a, len);
-	ps->markup = get_markup(ps->a);
 	if (len == 3)
 		return (sort_3(&ps->a));
+	if (len == 4)
+		return (sort_4(&ps->a, &ps->b));
+	get_index(ps->a, len);
+	ps->markup = get_markup(ps->a);
 	get_status(ps->markup);
+	//print_stack(ps->a, ps->b);
 	sort(&ps->a, &ps->b, &ps->markup);
 	//print_stack(ps->a, ps->b);
 	return (0);
 }
-
