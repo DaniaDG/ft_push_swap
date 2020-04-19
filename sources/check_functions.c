@@ -94,27 +94,21 @@ int		fill_stack(int argc, char **argv, t_stack **a)
 int		check_len2(char *str, t_stack **a, t_stack **b)
 {
 	if (ft_strequ(str, "sa"))
-		swap(a);
+		swap(a, NULL);
 	else if (ft_strequ(str, "sb"))
-		swap(b);
+		swap(b, NULL);
 	else if (ft_strequ(str, "ss"))
-	{
-		swap(a);
-		swap(b);
-	}
+		swap_all(a, b, NULL);
 	else if (ft_strequ(str, "pa"))
-		push(b, a);
+		push(b, a, NULL);
 	else if (ft_strequ(str, "pb"))
-		push(a, b);
+		push(a, b, NULL);
 	else if (ft_strequ(str, "ra"))
-		rotate(a);
+		rotate(a, NULL);
 	else if (ft_strequ(str, "rb"))
-		rotate(b);
+		rotate(b, NULL);
 	else if (ft_strequ(str, "rr"))
-	{
-		rotate(a);
-		rotate(b);
-	}
+		rotate_all(a, b, NULL);
 	else
 		return (0);
 	return (1);
@@ -123,14 +117,11 @@ int		check_len2(char *str, t_stack **a, t_stack **b)
 int		check_len3(char *str, t_stack **a, t_stack **b)
 {
 	if (ft_strequ(str, "rra"))
-		reverse_rotate(a);
+		reverse_rotate(a, NULL);
 	else if (ft_strequ(str, "rrb"))
-		reverse_rotate(b);
+		reverse_rotate(b, NULL);
 	else if (ft_strequ(str, "rrr"))
-	{
-		reverse_rotate(a);
-		reverse_rotate(b);
-	}
+		reverse_rotate_all(a, b, NULL);
 	else
 		return (0);
 	return (1);

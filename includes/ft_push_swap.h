@@ -17,17 +17,17 @@
 # include "get_next_line.h"
 # include "limits.h"
 
-# define SA		"sa"
-# define SB		"sb"
-# define SS		"ss"
-# define PA		"pa"
-# define PB		"pb"
-# define RA		"ra"
-# define RB		"rb"
-# define RR		"rr"
-# define RRA	"rra"
-# define RRB	"rrb"
-# define RRR	"rrr"
+# define SA		"sa\n"
+# define SB		"sb\n"
+# define SS		"ss\n"
+# define PA		"pa\n"
+# define PB		"pb\n"
+# define RA		"ra\n"
+# define RB		"rb\n"
+# define RR		"rr\n"
+# define RRA	"rra\n"
+# define RRB	"rrb\n"
+# define RRR	"rrr\n"
 
 typedef enum
 {
@@ -66,10 +66,13 @@ typedef struct			s_op_count
 t_stack					*ft_create_elem(int data);
 void					ft_push_down(t_stack **top, int data);
 void					ft_push_up(t_stack **top, int data);
-void					swap(t_stack **top);
-void					push(t_stack **top1, t_stack **top2);
-void					rotate(t_stack **top);
-void					reverse_rotate(t_stack **top);
+void					swap(t_stack **top, char *str);
+void					push(t_stack **top1, t_stack **top2, char *str);
+void					rotate(t_stack **top, char *str);
+void					reverse_rotate(t_stack **top, char *str);
+void					reverse_rotate_all(t_stack **a, t_stack **b, char *str);
+void					rotate_all(t_stack **a, t_stack **b, char *str);
+void					swap_all(t_stack **a, t_stack **b, char *str);
 void					add(t_stack **top, t_stack *tmp);
 t_stack					*cut(t_stack **top);
 void					free_stack(t_stack **top);
@@ -80,17 +83,22 @@ int						check_duplicate(t_stack *top);
 int						read_from_stdin(t_stack **a, t_stack **b);
 int						fill_stack(int argc, char **argv, t_stack **a);
 
-
+void					get_index(t_stack *top, int len);
 int						get_status(t_stack *top);
+int						all_true(t_stack *top);
 void					print_stack(t_stack *a, t_stack *b);
 t_stack					*get_markup(t_stack *top);
 
 int						ft_min(int a, int b);
+int						ft_abs(int a);
 t_op_count				count_num_of_operations(t_op_count *tmp);
 t_stack					*choose_b(t_stack *a, t_stack *b, t_op_count *op_count);
 t_stack					*find_position(t_stack *a, t_stack *b);
 t_op_count				assign_zero(void);
 t_op_count				assign_value(t_op_count tmp);
 int						len_stack(t_stack *top);
-int						sort_3(t_stack **a);
+void					sort(t_stack **a, t_stack **b, t_stack **markup);
+void					sort_3(t_stack **a);
+void					sort_4(t_stack **a, t_stack **b);
+void					sort_5(t_stack **a, t_stack **b);
 #endif

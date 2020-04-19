@@ -18,10 +18,10 @@ LIMIT=700
 FILE=problem_100
 SUM=0
 
-for i in {1..100}
+for i in {1..1000}
 do
-		export ARG=`ruby -e "puts (1..4).to_a.shuffle.join(' ')"`
-		echo $ARG
+		export ARG=`ruby -e "puts (1..5).to_a.shuffle.join(' ')"`
+		#echo $ARG
 		if ./push_swap $ARG | ./checker $ARG | grep -q KO
 		then
 			echo "Error!"
@@ -39,7 +39,7 @@ do
 			MAX=$NUMBER;
 		fi
 		echo $i ":" $NUMBER
-		echo "---------------"
+		#echo "---------------"
 		let SUM+=$NUMBER;
 		let ITERATIONS+=1
 done

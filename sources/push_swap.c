@@ -22,14 +22,11 @@ int		ft_min(int a, int b)
 	return (a <= b ? a : b);
 }
 
-void	get_index(t_stack *top, int len)
+t_stack		*get_min(t_stack *top)
 {
-	int		i;
-	t_stack	*max;
-	t_stack	*min;
-	t_stack	*tmp;
+	t_stack		*min;
+	t_stack		*tmp;
 
-	i = len;
 	tmp = top->down;
 	min = top;
 	while (tmp != top)
@@ -38,8 +35,18 @@ void	get_index(t_stack *top, int len)
 			min = tmp;
 		tmp = tmp->down;
 	}
+	return (min);
+}
+
+void	get_index(t_stack *top, int len)
+{
+	t_stack	*max;
+	t_stack	*min;
+	t_stack	*tmp;
+
+	min = get_min(top);
 	min->index = 1;
-	while (len > 0)
+	while (len-- > 0)
 	{
 		max = min;
 		tmp = top->down;
@@ -51,8 +58,7 @@ void	get_index(t_stack *top, int len)
 				max = tmp;
 			tmp = tmp->down;
 		}
-		max->index = len;
-		len--;
+		max->index = len + 1;
 	}
 }
 
@@ -140,216 +146,6 @@ t_op_count		assign_value(t_op_count tmp)
 	return (t);
 }
 
-void		find_first_elem(t_stack *a, t_op_count *op_count)
-{
-	t_stack		*tmp;
-
-	*op_count = assign_zero();
-	if (a->index == 1)
-		return ;
-	tmp = a;
-	op_count->rra = len_stack(a);
-	while (tmp->index != 1)
-	{
-		op_count->ra++;
-		op_count->rra--;
-		tmp = tmp->down;
-	}
-	if (op_count->ra <= op_count->rra)
-		op_count->rra = 0;
-	else
-		op_count->ra = 0;
-}
-
-static void		check_swap_a(t_stack **a, t_stack *markup)
-{
-	if ((*a)->down->index > (*a)->up->index &&
-		(*a)->down->status == FALSE)
-	{
-		swap(a);
-		write(1, "sa\n", 3);
-		get_status(markup);
-	}
-}
-
-static void		pre_sort(t_stack **a, t_stack **b, t_stack *markup)
-{
-	t_stack		*tmp_a;
-	int			len;
-
-	tmp_a = *a;
-	len = len_stack(*a);
-	while (len >= 0)
-	{
-		check_swap_a(a, markup);
-		if (all_true(*a))
-			return ;
-		while ((*a)->status == TRUE && len >= 0)
-		{
-			rotate(a);
-			write(1, "ra\n", 3);
-			len--;
-		}
-		while ((*a)->status == FALSE)
-		{
-			push(a, b);
-			write(1, "pb\n", 3);
-			len--;
-		}
-	}
-}
-
-static void		start_rotating(t_stack **a, t_stack **b, t_op_count *op_count)
-{
-	while (op_count->rr > 0)
-	{
-		rotate(a);
-		rotate(b);
-		write(1, "rr\n", 3);
-		op_count->rr--;
-	}
-	while (op_count->rrr > 0)
-	{
-		reverse_rotate(a);
-		reverse_rotate(b);
-		write(1, "rrr\n", 4);
-		op_count->rrr--;
-	}
-	while (op_count->ra > 0)
-	{
-		rotate(a);
-		write(1, "ra\n", 3);
-		op_count->ra--;
-	}
-	while (op_count->rb > 0)
-	{
-		rotate(b);
-		write(1, "rb\n", 3);
-		op_count->rb--;
-	}
-	while (op_count->rra > 0)
-	{
-		reverse_rotate(a);
-		write(1, "rra\n", 4);
-		op_count->rra--;
-	}
-	while (op_count->rrb > 0)
-	{
-		reverse_rotate(b);
-		write(1, "rrb\n", 4);
-		op_count->rrb--;
-	}
-}
-
-void	sort(t_stack **a, t_stack **b, t_stack **markup)
-{
-	int			len;
-	int			t;
-	t_stack		*tmp_b;
-	t_op_count	op_count;
-
-	len = len_stack(*a);
-	t = get_status(*markup);
-	pre_sort(a, b, *markup);
-	while (*b)
-	{
-		op_count = assign_zero();
-		tmp_b = choose_b(*a, *b, &op_count);
-		start_rotating(a, b, &op_count);
-		push(b, a);
-		write(1, "pa\n", 3);
-	}
-	find_first_elem(*a, &op_count);
-	start_rotating(a, b, &op_count);
-}
-
-int		sort_3(t_stack **a)
-{
-	get_index(*a, 3);
-	print_stack(*a, NULL);
-	if ((*a)->index == 1 && (*a)->down->index == 3)
-	{
-		swap(a);
-		write(1, "sa\n", 3);
-		rotate(a);
-		write(1, "ra\n", 3);
-	}
-	else if ((*a)->index == 2)
-	{
-		if ((*a)->down->index == 1)
-		{
-			swap(a);
-			write(1, "sa\n", 3);
-		}
-		else
-		{
-			reverse_rotate(a);
-			write(1, "rra\n", 4);
-		}	
-	}
-	else if ((*a)->index == 3)
-	{
-		if ((*a)->down->index == 1)
-		{
-			rotate(a);
-			write(1, "ra\n", 3);
-		}
-		else
-		{
-			swap(a);
-			write(1, "sa\n", 3);
-			reverse_rotate(a);
-			write(1, "rra\n", 4);
-		}	
-	}
-	return (0);
-}
-
-int		sort_4(t_stack **a, t_stack **b)
-{
-	t_stack		*tmp_a;
-	int			i;
-
-	tmp_a = *a;
-	i = 0;
-	get_index(*a, 4);
-	while (i < 4)
-	{
-		if (tmp_a->up->index - tmp_a->index == 1)
-			i++;
-		else
-			break ;
-		if (i == 4)
-				break ;
-		tmp_a = tmp_a->down;
-	}
-	while (i > 0)
-	{
-		rotate(a);
-		write(1, "ra\n", 3);
-		i--;
-	}
-	push(a, b);
-	write(1, "pb\n", 3);
-	sort_3(a);
-	
-	push(b, a);
-	write(1, "pa\n", 3);
-	if ((*a)->data > (*a)->up->data)
-	{
-		rotate(a);
-		write(1, "ra\n", 3);
-	}
-	else if ((*a)->data < (*a)->up->data && (*a)->data > (*a)->down->data)
-	{
-		swap(a);
-		write(1, "sa\n", 3);
-	}
-	
-	//print_stack(*a, *b);
-	return (0);
-}
-
 int		main(int argc, char **argv)
 {
 	t_ps		*ps;
@@ -365,14 +161,21 @@ int		main(int argc, char **argv)
 	if (!(len = check_duplicate(ps->a)))
 		str_exit(&ps->a, &ps->b, 2);
 	if (len == 3)
-		return (sort_3(&ps->a));
-	if (len == 4)
-		return (sort_4(&ps->a, &ps->b));
-	get_index(ps->a, len);
-	ps->markup = get_markup(ps->a);
-	get_status(ps->markup);
+		sort_3(&ps->a);
+	else if (len == 4)
+		sort_4(&ps->a, &ps->b);
+	else if (len == 5)
+		sort_5(&ps->a, &ps->b);
+	else
+	{
+		get_index(ps->a, len);
+		ps->markup = get_markup(ps->a);
+		get_status(ps->markup);
+		sort(&ps->a, &ps->b, &ps->markup);
+	}
 	//print_stack(ps->a, ps->b);
-	sort(&ps->a, &ps->b, &ps->markup);
-	//print_stack(ps->a, ps->b);
+	free_stack(&ps->a);
+	free_stack(&ps->b);
+	ft_memdel((void**)&ps);
 	return (0);
 }
