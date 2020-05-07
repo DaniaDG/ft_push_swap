@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_push_swap.h"
+#include "libft.h"
 
 void		rotate(t_stack **top, char *str)
 {

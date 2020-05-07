@@ -13,9 +13,8 @@
 #ifndef FT_PUSH_SWAP_H
 # define FT_PUSH_SWAP_H
 
-# include "libft.h"
-# include "get_next_line.h"
 # include "limits.h"
+# include <stdlib.h>
 
 # define SA		"sa\n"
 # define SB		"sb\n"
