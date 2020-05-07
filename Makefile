@@ -88,7 +88,7 @@ RESET = \033[0m
 all: $(NAME_CH) $(NAME_PS) #$(NAME_VS)
 
 $(NAME_CH): $(OBJECTS_DIRECTORY) $(OBJECTS) $(CH_OBJECTS) $(LIBFT)
-	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(CH_OBJECTS) -o $(NAME_CH)
+	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(CH_OBJECTS) $(LIBRARIES) -o $(NAME_CH)
 	@echo "\n$(NAME_CH): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_CH): $(GREEN)$(NAME_CH) was created$(RESET)"
 
@@ -98,7 +98,7 @@ $(NAME_CH): $(OBJECTS_DIRECTORY) $(OBJECTS) $(CH_OBJECTS) $(LIBFT)
 #	@echo "$(NAME_VS): $(GREEN)$(NAME_VS) was created$(RESET)"
 
 $(NAME_PS): $(OBJECTS_DIRECTORY) $(OBJECTS) $(PS_OBJECTS) $(LIBFT)
-	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(PS_OBJECTS) -o $(NAME_PS)
+	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(PS_OBJECTS) $(LIBRARIES) -o $(NAME_PS)
 	@echo "\n$(NAME_PS): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_PS): $(GREEN)$(NAME_PS) was created$(RESET)"
 

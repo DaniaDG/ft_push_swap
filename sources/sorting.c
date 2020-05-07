@@ -24,9 +24,6 @@ static void		check_swap_a(t_stack **a, t_stack *markup)
 
 static void		pre_sort(t_stack **a, t_stack **b, t_stack *markup)
 {
-	t_stack		*tmp_a;
-
-	tmp_a = *a;
 	while (1)
 	{
 		check_swap_a(a, markup);
@@ -78,18 +75,14 @@ static void		start_rotating(t_stack **a, t_stack **b, t_op_count *op_count)
 
 void	sort(t_stack **a, t_stack **b, t_stack **markup)
 {
-	int			len;
-	int			t;
-	t_stack		*tmp_b;
 	t_op_count	op_count;
 
-	len = len_stack(*a);
-	t = get_status(*markup);
+	get_status(*markup);
 	pre_sort(a, b, *markup);
 	while (*b)
 	{
 		op_count = assign_zero();
-		tmp_b = choose_b(*a, *b, &op_count);
+		choose_b(*a, *b, &op_count);
 		start_rotating(a, b, &op_count);
 		push(b, a, PA);
 	}
