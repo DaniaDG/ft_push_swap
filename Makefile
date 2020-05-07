@@ -133,8 +133,8 @@ fclean: clean
 	@echo "$(NAME): $(RED)$(MINILIBX) was deleted$(RESET)"
 	@rm -f $(NAME_CH)
 	@echo "$(NAME_CH): $(RED)$(NAME_CH) was deleted$(RESET)"
-	@rm -f $(NAME_VS)
-	@echo "$(NAME_VS): $(RED)$(NAME_VS) was deleted$(RESET)"
+	@rm -f $(NAME_PS)
+	@echo "$(NAME_PS): $(RED)$(NAME_PS) was deleted$(RESET)"
 
 re:
 	@$(MAKE) fclean
