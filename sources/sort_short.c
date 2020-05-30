@@ -12,13 +12,21 @@
 
 #include "ft_push_swap.h"
 
+int		short_sort(t_stack **a, t_stack **b, int len)
+{
+	if (len == 3)
+		sort_3(a);
+	else if (len == 4)
+		sort_4(a, b);
+	else if (len == 5)
+		sort_5(a, b);
+	else
+		return (0);
+	return (1);
+}
+
 void		sort_3(t_stack **a)
 {
-	(*a)->index = 0;
-	(*a)->down->index = 0;
-	(*a)->up->index = 0;
-	//norminette
-	get_index(*a, 3);
 	if ((*a)->index == 1 && (*a)->down->index == 3)
 	{
 		swap(a, SA);
@@ -45,10 +53,13 @@ void		sort_3(t_stack **a)
 
 void		sort_4(t_stack **a, t_stack **b)
 {
-	get_index(*a, 4);
 	if ((*a)->index == 3)
 		swap(a, SA);
 	push(a, b, PB);
+	(*a)->index = 0;
+	(*a)->down->index = 0;
+	(*a)->up->index = 0;
+	get_index(*a, 3);
 	sort_3(a);
 	if ((*b)->index == 1)
 		push(b, a, PA);
@@ -69,7 +80,6 @@ void		sort_5(t_stack **a, t_stack **b)
 	int		len;
 
 	len = 0;
-	get_index(*a, 5);
 	while (len != 2)
 	{
 		if ((*a)->index == 1 || (*a)->index == 2)
@@ -77,8 +87,11 @@ void		sort_5(t_stack **a, t_stack **b)
 		else
 			rotate(a, RA);
 		len = len_stack(*b);
-		//print_stack(*a, *b);
 	}
+	(*a)->index = 0;
+	(*a)->down->index = 0;
+	(*a)->up->index = 0;
+	get_index(*a, 3);
 	sort_3(a);
 	if ((*b)->index == 1)
 		swap(b, SB);

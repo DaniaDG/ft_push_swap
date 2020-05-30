@@ -50,6 +50,8 @@ int		fill_stack(int argc, char **argv, t_stack **a)
 			if ((!ft_isspace(*end) && *end != '\0') || l > INT_MAX
 				|| l < INT_MIN || *(end - 1) == '-' || *(end - 1) == '+')
 				return (0);
+			while (ft_isspace(*end))
+				end++;
 			ft_push_down(a, (int)l);
 		}
 	}
@@ -209,7 +211,7 @@ t_stack		*get_markup(t_stack *top)
 }
 
 
-/*void	print_stack(t_stack *a, t_stack *b)
+void	print_stack(t_stack *a, t_stack *b)
 {
 	t_stack		*tmp;
 
@@ -245,5 +247,5 @@ t_stack		*get_markup(t_stack *top)
 	}
 	printf("\n");
 }
-*/
+
 

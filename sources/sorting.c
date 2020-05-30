@@ -22,6 +22,39 @@ static void		check_swap_a(t_stack **a, t_stack *markup)
 	}
 }
 
+
+void			choose_ra_or_rra(t_stack *a, t_op_count *op_count)
+{
+	t_stack 	*tmp;
+
+	if (a->down->status == FALSE)
+	{
+		op_count->ra = 1;
+		return;
+	}
+	tmp = a->down;
+	while (tmp != a && tmp->status == TRUE)
+	{
+		op_count->ra++;
+		tmp = tmp->down;
+	}
+	tmp = a->up;
+	while (tmp != a && tmp->status == TRUE)
+	{
+		op_count->rra++;
+		tmp = tmp->up;
+	}
+	op_count->rra++;
+	if (op_count->ra && op_count->rra)
+	{
+		if (op_count->ra >= op_count->rra)
+			op_count->rra = 0;
+		else
+			op_count->ra = 0;
+	}
+}
+
+
 static void		pre_sort(t_stack **a, t_stack **b, t_stack *markup)
 {
 	while (1)
@@ -30,9 +63,9 @@ static void		pre_sort(t_stack **a, t_stack **b, t_stack *markup)
 		if (all_true(*a))
 			return ;
 		while ((*a)->status == TRUE)
-			rotate(a, RA);
+			rotate(a, RA);		
 		while ((*a)->status == FALSE)
-			push(a, b, RB);
+			push(a, b, PB);
 	}
 }
 

@@ -96,6 +96,7 @@ t_stack					*find_position(t_stack *a, t_stack *b);
 t_op_count				assign_zero(void);
 t_op_count				assign_value(t_op_count tmp);
 int						len_stack(t_stack *top);
+int						short_sort(t_stack **a, t_stack **b, int len);
 void					sort(t_stack **a, t_stack **b, t_stack **markup);
 void					sort_3(t_stack **a);
 void					sort_4(t_stack **a, t_stack **b);

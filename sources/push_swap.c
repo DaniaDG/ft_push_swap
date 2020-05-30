@@ -161,20 +161,16 @@ int		main(int argc, char **argv)
 		str_exit(&ps->a, &ps->b, 2);
 	if (!(len = check_duplicate(ps->a)))
 		str_exit(&ps->a, &ps->b, 2);
-	if (len == 3)
-		sort_3(&ps->a);
-	else if (len == 4)
-		sort_4(&ps->a, &ps->b);
-	else if (len == 5)
-		sort_5(&ps->a, &ps->b);
-	else
+	if (checker(&ps->a, &ps->b))
+		return (0);
+	get_index(ps->a, len);
+	if (!(short_sort(&ps->a, &ps->b, len)))
 	{
-		get_index(ps->a, len);
 		ps->markup = get_markup(ps->a);
-		get_status(ps->markup);
+		//get_status(ps->markup);
+		//print_stack(ps->a, ps->b);
 		sort(&ps->a, &ps->b, &ps->markup);
 	}
-	//print_stack(ps->a, ps->b);
 	free_stack(&ps->a);
 	free_stack(&ps->b);
 	ft_memdel((void**)&ps);
