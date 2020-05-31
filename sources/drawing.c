@@ -54,29 +54,32 @@ void		draw_stack(t_visual *ptr, t_stack *top, int len, int stack)
 {
 	t_stack		*tmp;
 	int			x = 0;
-	int			y = 0;
-	int			k = 0;
+	int			y = 500;
+	int			k;
+	int			step;
+	int			max = len;
 
-
+	k = len - 1;
+	step = HEIGHT / len;
 	len = len_stack(top);
 	if (!top)
 		return ;
-	tmp = top;
-	while (k < len)
+	tmp = top->up;
+	while (len-- > 0)
 	{
 		x = 500 * stack;
-		while (x < 500 * stack + 500)
+		while (x < 500 * (stack + 1))
 		{
-			y = 50 * k;
-			while (y < 50 * k + 50)
+			y = step * (k + 1);
+			while (y >= step * k)
 			{
-				put_pixel(ptr, x, y, color(tmp->index, 10, BLUE, RED));
-				y++;
+				put_pixel(ptr, x, y, color(tmp->index, max, BLUE, RED));
+				y--;
 			}
 			x++;
 		}
-		k++;
-		tmp = tmp->down;
+		k--;
+		tmp = tmp->up;
 	}
 }
 

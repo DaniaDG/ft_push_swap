@@ -44,14 +44,11 @@
 # define BLACK			0x000000
 
 
-typedef struct		s_image
+typedef enum
 {
-	void			*img;
-	char			*data_addr;
-	int				bits_per_pixel;
-	int				size_line;
-	int				endian;
-}					t_image;
+	IS_PRESSED,
+	NOT_PRESSED
+}					t_button;
 
 typedef struct			s_operations
 {
@@ -75,6 +72,9 @@ typedef struct		s_visual
 	t_operations	*op_curr_list;
 	t_stack			*a;
 	t_stack			*b;
+
+	t_button		space;
+	
 	int				len;
 	
 }					t_visual;

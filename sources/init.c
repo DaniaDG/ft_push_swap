@@ -42,6 +42,7 @@ t_visual		*init_ptr(void)
 	ptr->op_begin_list = NULL;
 	ptr->op_end_list = NULL;
 	ptr->op_curr_list = NULL;
+	ptr->space = NOT_PRESSED;
 	
 	//init_mlx(ptr);	
 	return (ptr);

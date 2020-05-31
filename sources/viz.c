@@ -63,30 +63,28 @@ int		undo_operations(char *str, t_stack **a, t_stack **b)
 	return (0);
 }
 
+int		key_release(int key, t_visual *ptr)
+{
+	if (key == 49)
+		ptr->space = NOT_PRESSED;
+	return (0);
+}
+
 int		key_press(int key, t_visual *ptr)
 {
 	if (key == 124 && ptr->op_curr_list)
 	{
 		do_operations(ptr->op_curr_list->op, &ptr->a, &ptr->b);
 		ptr->op_curr_list = ptr->op_curr_list->next;
-		drawing(ptr, ptr->a, ptr->b, ptr->len);
-		print_stack(ptr->a, ptr->b);
 	}
-	/*if (key == 123)
-	{
-		if (!ptr->op_curr_list)
-			ptr->op_curr_list = ptr->op_end_list;
-		ptr->op_curr_list = ptr->op_curr_list->prev;
-		undo_operations(ptr->op_curr_list->op, &ptr->a, &ptr->b);
-		drawing(ptr, ptr->a, ptr->b, ptr->len);
-		print_stack(ptr->a, ptr->b);
-	}*/
+	drawing(ptr, ptr->a, ptr->b, ptr->len);
 	return (0);
 }
 
 void	hooks(t_visual *ptr)
 {
 	mlx_hook(ptr->win, 2, 0, key_press, ptr);
+	//mlx_hook(ptr->win, 3, 0, key_press, ptr);
 	//mlx_hook(ptr->win, 4, 0, mouse_press, ptr);
 	//mlx_hook(ptr->win, 5, 0, mouse_release, ptr);
 	//mlx_hook(ptr->win, 6, 0, mouse_move, ptr);
