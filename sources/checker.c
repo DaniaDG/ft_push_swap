@@ -23,7 +23,7 @@ int		main(int argc, char **argv)
 		str_exit(&a, &b, 2);
 	if (!(check_duplicate(a)))
 		str_exit(&a, &b, 2);
-	if (!(read_from_stdin(&a, &b)))
+	if (!(read_from_stdin(&a, &b, 0)))
 		str_exit(&a, &b, 2);
 	if (!(checker(&a, &b)))
 		str_exit(&a, &b, 0);

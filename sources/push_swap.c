@@ -23,45 +23,6 @@ int		ft_min(int a, int b)
 	return (a <= b ? a : b);
 }
 
-t_stack		*get_min(t_stack *top)
-{
-	t_stack		*min;
-	t_stack		*tmp;
-
-	tmp = top->down;
-	min = top;
-	while (tmp != top)
-	{
-		if (tmp->data < min->data)
-			min = tmp;
-		tmp = tmp->down;
-	}
-	return (min);
-}
-
-void	get_index(t_stack *top, int len)
-{
-	t_stack	*max;
-	t_stack	*min;
-	t_stack	*tmp;
-
-	min = get_min(top);
-	min->index = 1;
-	while (len-- > 0)
-	{
-		max = min;
-		tmp = top->down;
-		if (top->data > max->data && !top->index)
-			max = top;
-		while (tmp != top)
-		{
-			if (tmp->data > max->data && !tmp->index)
-				max = tmp;
-			tmp = tmp->down;
-		}
-		max->index = len + 1;
-	}
-}
 
 int		all_true(t_stack *top)
 {
@@ -77,23 +38,6 @@ int		all_true(t_stack *top)
 		tmp = tmp->down;
 	}
 	return (1);
-}
-
-int		len_stack(t_stack *top)
-{
-	t_stack		*tmp;
-	int			len;
-
-	if (top == NULL)
-		return (0);
-	len = 1;
-	tmp = top->down;
-	while (tmp != top)
-	{
-		tmp = tmp->down;
-		len++;
-	}
-	return (len);
 }
 
 t_stack		*find_position(t_stack *a, t_stack *b)

@@ -19,7 +19,7 @@ static void	error(char *str)
 	exit(1);
 }
 
-static void	init_mlx(t_visual *ptr)
+void	init_mlx(t_visual *ptr)
 {
 	if (!(ptr->mlx = mlx_init()))
 		error("mlx init error");
@@ -37,6 +37,12 @@ t_visual		*init_ptr(void)
 
 	if (!(ptr = (t_visual *)malloc(sizeof(t_visual))))
 		error("init error");
-	init_mlx(ptr);	
+	ptr->a = NULL;
+	ptr->b = NULL;
+	ptr->op_begin_list = NULL;
+	ptr->op_end_list = NULL;
+	ptr->op_curr_list = NULL;
+	
+	//init_mlx(ptr);	
 	return (ptr);
 }

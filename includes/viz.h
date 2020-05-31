@@ -22,13 +22,13 @@
 # include "ft_push_swap.h"
 
 
-# define IMG_H		1000
+# define IMG_H		500
 # define IMG_W		1000
 
 # define MENU_H		100
 # define MENU_W		100
 
-# define HEIGHT		1000
+# define HEIGHT		500
 # define WIDTH		1000
 # define MAX_NUM	100
 
@@ -53,6 +53,13 @@ typedef struct		s_image
 	int				endian;
 }					t_image;
 
+typedef struct			s_operations
+{
+	char				*op;
+	struct s_operations	*next;
+	struct s_operations	*prev;
+}						t_operations;
+
 typedef struct		s_visual
 {
 	void			*mlx;
@@ -63,25 +70,23 @@ typedef struct		s_visual
 	int				size_line;
 	int				endian;
 
-
-	t_image			*image;
+	t_operations	*op_begin_list;
+	t_operations	*op_end_list;
+	t_operations	*op_curr_list;
+	t_stack			*a;
+	t_stack			*b;
+	int				len;
 	
 }					t_visual;
 
-typedef struct			s_operations
-{
-	char				*str;
-	struct s_operations	*next;
-	struct s_operations	*prev;
-}						t_operations;
-
 t_visual			*init_ptr(void);
+void				init_mlx(t_visual *ptr);
 int					red(int rgb);
 int					green(int rgb);
 int					blue(int rgb);
 int					rgb(int r, int g, int b);
-int		check_len2(char *str, t_stack **a, t_stack **b);
-int		check_len3(char *str, t_stack **a, t_stack **b);
-int			draw_stack(t_visual *ptr, t_stack *a, t_stack *b);
+int					check_len2(char *str, t_stack **a, t_stack **b);
+int					check_len3(char *str, t_stack **a, t_stack **b);
+int					drawing(t_visual *ptr, t_stack *a, t_stack *b, int len);
 
 #endif

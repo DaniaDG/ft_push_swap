@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "viz.h"
+#include "ft_push_swap.h"
 
 void		put_pixel(t_visual *ptr, int x, int y, int color)
 {
@@ -49,25 +50,43 @@ int				color(int current, int max, int color1, int color2)
 	return (rgb(r, g, b));
 }
 
-int			draw_stack(t_visual *ptr, t_stack *a, t_stack *b)
+void		draw_stack(t_visual *ptr, t_stack *top, int len, int stack)
 {
-	int		x;
-	int		y;
+	t_stack		*tmp;
+	int			x = 0;
+	int			y = 0;
+	int			k = 0;
 
-	ft_bzero(ptr->data_addr, IMG_W * IMG_H * (ptr->bits_per_pixel / 8));
-	x = 330;
-	y = 0;
-	while (x < 355)
+
+	len = len_stack(top);
+	if (!top)
+		return ;
+	tmp = top;
+	while (k < len)
 	{
-		while (y < 459)
+		x = 500 * stack;
+		while (x < 500 * stack + 500)
 		{
-			put_pixel(ptr, x, y, color(a->index, 10, BLUE, RED));
-			y++;
+			y = 50 * k;
+			while (y < 50 * k + 50)
+			{
+				put_pixel(ptr, x, y, color(tmp->index, 10, BLUE, RED));
+				y++;
+			}
+			x++;
 		}
-		x++;
+		k++;
+		tmp = tmp->down;
 	}
+}
+
+
+int			drawing(t_visual *ptr, t_stack *a, t_stack *b, int len)
+{
+	ft_bzero(ptr->data_addr, IMG_W * IMG_H * (ptr->bits_per_pixel / 8));
+	draw_stack(ptr, a, len, 0);
+	draw_stack(ptr, b, len, 1);
 	mlx_put_image_to_window(ptr->mlx, ptr->win, ptr->img, 0, 0);
-	if (!b)
-		return (1);
+
 	return (0);
 }

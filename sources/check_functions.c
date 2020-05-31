@@ -106,16 +106,19 @@ int		do_operations(char *str, t_stack **a, t_stack **b)
 	return (0);
 }
 
-int		read_from_stdin(t_stack **a, t_stack **b)
+int		read_from_stdin(t_stack **a, t_stack **b, int viz)
 {
 	char	*line;
 
 	line = NULL;
-	while (get_next_line(0, &line) == 1)
+	if (!viz)
 	{
-		if (!(do_operations(line, a, b)))
-			return (0);
-		ft_memdel((void**)&line);
+		while (get_next_line(0, &line) == 1)
+		{
+			if (!(do_operations(line, a, b)))
+				return (0);
+			ft_memdel((void**)&line);
+		}
 	}
 	return (1);
 }
@@ -163,6 +166,63 @@ int		check_duplicate(t_stack *top)
 	return (i);
 }
 
+int		len_stack(t_stack *top)
+{
+	t_stack		*tmp;
+	int			len;
+
+	if (top == NULL)
+		return (0);
+	len = 1;
+	tmp = top->down;
+	while (tmp != top)
+	{
+		tmp = tmp->down;
+		len++;
+	}
+	return (len);
+}
+
+t_stack		*get_min(t_stack *top)
+{
+	t_stack		*min;
+	t_stack		*tmp;
+
+	tmp = top->down;
+	min = top;
+	while (tmp != top)
+	{
+		if (tmp->data < min->data)
+			min = tmp;
+		tmp = tmp->down;
+	}
+	return (min);
+}
+
+void	get_index(t_stack *top, int len)
+{
+	t_stack	*max;
+	t_stack	*min;
+	t_stack	*tmp;
+
+	min = get_min(top);
+	min->index = 1;
+	while (len-- > 0)
+	{
+		max = min;
+		tmp = top->down;
+		if (top->data > max->data && !top->index)
+			max = top;
+		while (tmp != top)
+		{
+			if (tmp->data > max->data && !tmp->index)
+				max = tmp;
+			tmp = tmp->down;
+		}
+		max->index = len + 1;
+	}
+}
+
 int		get_status(t_stack *top)
 {
 	t_stack	*tmp;
@@ -172,7 +232,6 @@ int		get_status(t_stack *top)
 	top->status = TRUE;
 	max = top->data;
 	tmp = top->down;
-	//check 1 and 2 elemets
 	while (tmp != top)
 	{
 		if (tmp->data > max)

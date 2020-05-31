@@ -16,9 +16,9 @@ NAME_VS = visualizer
 
 CC = gcc 
 FLAGS = -Wextra -Wall -Werror -g
-LIBRARIES = -lm -lft -L$(LIBFT_DIRECTORY)
-#LIBRARIES = -lmlx -lm -lft -L$(LIBFT_DIRECTORY) -L$(MINILIBX_DIRECTORY) -framework OpenGL -framework AppKit
-INCLUDES = -I $(HEADERS_DIRECTORY) -I $(LIBFT_HEADERS_DIRECTORY) #-I$(MINILIBX_HEADERS)
+#LIBRARIES = -lm -lft -L$(LIBFT_DIRECTORY)
+LIBRARIES = -lmlx -lm -lft -L$(LIBFT_DIRECTORY) -L$(MINILIBX_DIRECTORY) -framework OpenGL -framework AppKit
+INCLUDES = -I $(HEADERS_DIRECTORY) -I $(LIBFT_HEADERS_DIRECTORY) -I$(MINILIBX_HEADERS)
 #-I$(MINILIBX_HEADERS)
 #-Wall -Werror -Wextra
 # LIBFT
@@ -30,13 +30,13 @@ LIBFT_HEADERS_DIRECTORY = $(LIBFT_DIRECTORY)includes/
 
 # MINILIBX
 
-#MINILIBX = $(MINILIBX_DIRECTORY)libmlx.a
-#MINILIBX_DIRECTORY = ./minilibx_macos/
-#MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
+MINILIBX = $(MINILIBX_DIRECTORY)libmlx.a
+MINILIBX_DIRECTORY = ./minilibx_macos/
+MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
 
 # PUSH_SWAP
 
-HEADERS_LIST = ft_push_swap.h
+HEADERS_LIST = ft_push_swap.h viz.h
 HEADERS_DIRECTORY = includes/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
@@ -60,14 +60,14 @@ CH_OBJECTS_LIST = $(patsubst %.c, %.o, $(CH_SOURCES_LIST))
 CH_OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(CH_OBJECTS_LIST))
 
 
-# VIZUALIZER
+#VIZUALIZER
 
-#VS_SOURCES_DIRECTORY = sources/
-#VS_SOURCES_LIST = viz.c init.c drawing.c rgb.c
-#VS_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(VS_SOURCES_LIST))
+VS_SOURCES_DIRECTORY = sources/
+VS_SOURCES_LIST = viz.c init.c drawing.c rgb.c
+VS_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(VS_SOURCES_LIST))
 
-#VS_OBJECTS_LIST = $(patsubst %.c, %.o, $(VS_SOURCES_LIST))
-#VS_OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(VS_OBJECTS_LIST))
+VS_OBJECTS_LIST = $(patsubst %.c, %.o, $(VS_SOURCES_LIST))
+VS_OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(VS_OBJECTS_LIST))
 
 
 PS_SOURCES_LIST = push_swap.c count_num_oper.c choose_b.c sorting.c sort_short.c
@@ -85,19 +85,19 @@ RESET = \033[0m
 
 .PHONY: all clean fclean re
 
-all: $(NAME_CH) $(NAME_PS) #$(NAME_VS)
+all: $(NAME_CH) $(NAME_PS) $(NAME_VS)
 
-$(NAME_CH): $(OBJECTS_DIRECTORY) $(OBJECTS) $(CH_OBJECTS) $(LIBFT)
+$(NAME_CH): $(OBJECTS_DIRECTORY) $(OBJECTS) $(CH_OBJECTS) $(LIBFT) $(MINILIBX)
 	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(CH_OBJECTS) $(LIBRARIES) -o $(NAME_CH)
 	@echo "\n$(NAME_CH): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_CH): $(GREEN)$(NAME_CH) was created$(RESET)"
 
-#$(NAME_VS): $(LIBFT) $(MINILIBX) $(OBJECTS_DIRECTORY) $(OBJECTS) $(VS_OBJECTS)
-#	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(VS_OBJECTS) -o $(NAME_VS)
-#	@echo "\n$(NAME_VS): $(GREEN)object files were created$(RESET)"
-#	@echo "$(NAME_VS): $(GREEN)$(NAME_VS) was created$(RESET)"
+$(NAME_VS): $(LIBFT) $(MINILIBX) $(OBJECTS_DIRECTORY) $(OBJECTS) $(VS_OBJECTS)
+	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(VS_OBJECTS) -o $(NAME_VS)
+	@echo "\n$(NAME_VS): $(GREEN)object files were created$(RESET)"
+	@echo "$(NAME_VS): $(GREEN)$(NAME_VS) was created$(RESET)"
 
-$(NAME_PS): $(OBJECTS_DIRECTORY) $(OBJECTS) $(PS_OBJECTS) $(LIBFT)
+$(NAME_PS): $(OBJECTS_DIRECTORY) $(OBJECTS) $(PS_OBJECTS) $(LIBFT) $(MINILIBX)
 	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(PS_OBJECTS) $(LIBRARIES) -o $(NAME_PS)
 	@echo "\n$(NAME_PS): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_PS): $(GREEN)$(NAME_PS) was created$(RESET)"
@@ -114,27 +114,29 @@ $(LIBFT):
 	@echo "$(NAME_CH): $(GREEN)Creating $(LIBFT)...$(RESET)"
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 
-#$(MINILIBX):
-#	@echo "$(NAME): $(GREEN)Creating $(MINILIBX)...$(RESET)"
-#	@$(MAKE) -sC $(MINILIBX_DIRECTORY)
+$(MINILIBX):
+	@echo "$(NAME): $(GREEN)Creating $(MINILIBX)...$(RESET)"
+	@$(MAKE) -sC $(MINILIBX_DIRECTORY)
 
 clean:
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
-#	@$(MAKE) -sC $(MINILIBX_DIRECTORY) clean
+	@$(MAKE) -sC $(MINILIBX_DIRECTORY) clean
 	@rm -rf $(OBJECTS_DIRECTORY)
 	@echo "$(NAME_CH): $(RED)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
 	@echo "$(NAME_CH): $(RED)object files were deleted$(RESET)"
-#	@echo "$(NAME_VS): $(RED)object files were deleted$(RESET)"
+	@echo "$(NAME_VS): $(RED)object files were deleted$(RESET)"
 
 fclean: clean
 	@rm -f $(LIBFT)
 	@echo "$(NAME_CH): $(RED)$(LIBFT) was deleted$(RESET)"
-#	@rm -f $(MINILIBX)
-#	@echo "$(NAME): $(RED)$(MINILIBX) was deleted$(RESET)"
+	@rm -f $(MINILIBX)
+	@echo "$(NAME): $(RED)$(MINILIBX) was deleted$(RESET)"
 	@rm -f $(NAME_CH)
 	@echo "$(NAME_CH): $(RED)$(NAME_CH) was deleted$(RESET)"
 	@rm -f $(NAME_PS)
 	@echo "$(NAME_PS): $(RED)$(NAME_PS) was deleted$(RESET)"
+	@rm -f $(NAME_VS)
+	@echo "$(NAME_VS): $(RED)$(NAME_VS) was deleted$(RESET)"
 
 re:
 	@$(MAKE) fclean
