@@ -73,7 +73,7 @@ void		draw_stack(t_visual *ptr, t_stack *top, int len, int stack)
 			y = step * (k + 1);
 			while (y >= step * k)
 			{
-				put_pixel(ptr, x, y, color(tmp->index, max, BLUE, RED));
+				put_pixel(ptr, x, y, color(tmp->index, max, SILVER, BLUE));
 				y--;
 			}
 			x++;

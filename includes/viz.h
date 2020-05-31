@@ -34,7 +34,7 @@
 
 # define RED			0xFF0000
 # define GREEN			0x00FF00
-# define BLUE			0x0000FF
+# define BLUE			0x0108D1
 # define YELLOW			0xFFFDAC
 # define GREY			0x555555
 # define PINK			0xFF4DC4
@@ -72,7 +72,8 @@ typedef struct		s_visual
 	t_operations	*op_curr_list;
 	t_stack			*a;
 	t_stack			*b;
-
+	int				prev;
+	int				next;
 	t_button		space;
 	
 	int				len;

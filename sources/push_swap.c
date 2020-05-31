@@ -111,8 +111,6 @@ int		main(int argc, char **argv)
 	if (!(short_sort(&ps->a, &ps->b, len)))
 	{
 		ps->markup = get_markup(ps->a);
-		//get_status(ps->markup);
-		//print_stack(ps->a, ps->b);
 		sort(&ps->a, &ps->b, &ps->markup);
 	}
 	free_stack(&ps->a);

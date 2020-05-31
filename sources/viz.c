@@ -15,26 +15,25 @@
 #include "libft.h"
 #include "get_next_line.h"
 
-/*t_visual	*ptr = NULL;
-
-int		do_and_draw_operations(char *str, t_stack **a, t_stack **b)
-{
-	int		len;
-
-	len = ft_strlen(str);
-	if (len == 2)
-		return(check_len2(str, a, b));
-	if (len == 3)
-		return(check_len3(str, a, b));
-	draw_stack(ptr, *a, *b);
-	return (0);
-}
-*/
 int		turn_off(void *param)
 {
 	(void)param;
 	exit(0);
 }
+
+void	free_op_list(t_operations **begin_list)
+{
+	t_operations	*tmp;
+
+	while (*begin_list)
+	{
+		tmp = *begin_list;
+		*begin_list = (*begin_list)->next;
+		ft_memdel((void**)&(tmp->op));
+		ft_memdel((void**)&tmp);
+	}
+}
+
 
 int		undo_operations(char *str, t_stack **a, t_stack **b)
 {
@@ -72,12 +71,36 @@ int		key_release(int key, t_visual *ptr)
 
 int		key_press(int key, t_visual *ptr)
 {
-	if (key == 124 && ptr->op_curr_list)
+	if (key == 53)
+		turn_off(ptr);
+	if (key == 124 && ptr->next)
 	{
 		do_operations(ptr->op_curr_list->op, &ptr->a, &ptr->b);
 		ptr->op_curr_list = ptr->op_curr_list->next;
+		ptr->prev = 1;
+		if (!ptr->op_curr_list)
+		{
+			ptr->op_curr_list = ptr->op_end_list;
+			ptr->next = 0;
+		}
+		drawing(ptr, ptr->a, ptr->b, ptr->len);
 	}
-	drawing(ptr, ptr->a, ptr->b, ptr->len);
+	if (key == 123 && ptr->prev)
+	{
+		if (ptr->next)
+			ptr->op_curr_list = ptr->op_curr_list->prev;
+		if (!ptr->op_curr_list)
+		{
+			ptr->op_curr_list = ptr->op_begin_list;
+			ptr->prev = 0;
+		}
+		else
+		{
+			undo_operations(ptr->op_curr_list->op, &ptr->a, &ptr->b);
+			ptr->next = 1;
+		}
+		drawing(ptr, ptr->a, ptr->b, ptr->len);
+	}
 	return (0);
 }
 
@@ -132,7 +155,7 @@ int		add_op_to_list(t_operations **begin_list, t_operations **end_list, char *da
 	}
 	if (!(tmp = create_op_elem(data)))
 	{
-		//free_list;
+		free_op_list(begin_list);
 		return (0);
 	}
 	if (*begin_list == NULL)
@@ -150,21 +173,6 @@ int		add_op_to_list(t_operations **begin_list, t_operations **end_list, char *da
 	return (1);
 }
 
-void	free_op_list(t_operations **begin_list)
-{
-	t_operations	*tmp;
-
-	//if (!(*begin_list))
-	//	return ;
-	while (*begin_list)
-	{
-		tmp = *begin_list;
-		*begin_list = (*begin_list)->next;
-		ft_memdel((void**)&(tmp->op));
-		ft_memdel((void**)&tmp);
-	}
-}
-
 int		get_operations(t_operations **op_begin_list, t_operations **op_end_list)
 {
 	char			*line;
@@ -174,7 +182,7 @@ int		get_operations(t_operations **op_begin_list, t_operations **op_end_list)
 	{
 		if (!(add_op_to_list(op_begin_list, op_end_list, line)))
 		{
-			//free_list;
+			free_op_list(op_begin_list);
 			return (0);
 		}
 		ft_memdel((void**)&line);
@@ -210,9 +218,9 @@ int		main(int argc, char **argv)
 	ptr->len = len_stack(ptr->a);
 	get_index(ptr->a, ptr->len);
 	ptr->op_curr_list = ptr->op_begin_list;
+	//printf("begin = %s, end = %s\n", ptr->op_begin_list->op, ptr->op_end_list->op);
 	init_mlx(ptr);
 	drawing(ptr, ptr->a, ptr->b, ptr->len);
-	//print_op_list(op_end_list);
 	hooks(ptr);
 	return (0);
 }
