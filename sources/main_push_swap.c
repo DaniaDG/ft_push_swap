@@ -105,7 +105,7 @@ int		main(int argc, char **argv)
 		str_exit(&ps->a, &ps->b, 2);
 	if (!(len = check_duplicate(ps->a)))
 		str_exit(&ps->a, &ps->b, 2);
-	if (checker(&ps->a, &ps->b))
+	if (check_sorted(&ps->a, &ps->b))
 		return (0);
 	get_index(ps->a, len);
 	if (!(short_sort(&ps->a, &ps->b, len)))

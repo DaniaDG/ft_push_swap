@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_push_swap.h"
+#include "viz.h"
 #include "libft.h"
 
 void		free_stack(t_stack **top)
@@ -37,6 +38,19 @@ void		free_stack(t_stack **top)
 			ft_memdel((void**)&((*top)->up));
 		}
 	ft_memdel((void**)top);
+	}
+}
+
+void	free_op_list(t_operations **begin_list)
+{
+	t_operations	*tmp;
+
+	while (*begin_list)
+	{
+		tmp = *begin_list;
+		*begin_list = (*begin_list)->next;
+		ft_memdel((void**)&(tmp->op));
+		ft_memdel((void**)&tmp);
 	}
 }
 

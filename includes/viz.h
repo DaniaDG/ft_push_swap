@@ -82,10 +82,12 @@ typedef struct		s_visual
 
 t_visual			*init_ptr(void);
 void				init_mlx(t_visual *ptr);
+void				free_op_list(t_operations **begin_list);
 int					red(int rgb);
 int					green(int rgb);
 int					blue(int rgb);
 int					rgb(int r, int g, int b);
+int					color(int current, int max, int color1, int color2);
 int					drawing(t_visual *ptr, t_stack *a, t_stack *b, int len);
 void				draw_help(t_visual *ptr);
 void				draw_ok(t_visual *ptr);

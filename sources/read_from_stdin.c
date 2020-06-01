@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   read_from_stdin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsausage <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,24 +11,22 @@
 /* ************************************************************************** */
 
 #include "ft_push_swap.h"
+#include "libft.h"
+#include "get_next_line.h"
 
-int		main(int argc, char **argv)
+int		read_from_stdin(t_stack **a, t_stack **b, int viz)
 {
-	t_stack		*a = NULL;
-	t_stack		*b = NULL;
+	char	*line;
 
-	if (argc == 1)
-		return (0);
-	if (!(fill_stack(argc, argv, &a)))
-		str_exit(&a, &b, 2);
-	if (!(check_duplicate(a)))
-		str_exit(&a, &b, 2);
-	if (!(read_from_stdin(&a, &b, 0)))
-		str_exit(&a, &b, 2);
-	if (!(checker(&a, &b)))
-		str_exit(&a, &b, 0);
-	else
-		str_exit(&a, &b, 1);
-	return (0);
+	line = NULL;
+	if (!viz)
+	{
+		while (get_next_line(0, &line) == 1)
+		{
+			if (!(do_operations(line, a, b, ft_strlen(line))))
+				return (0);
+			ft_memdel((void**)&line);
+		}
+	}
+	return (1);
 }
-

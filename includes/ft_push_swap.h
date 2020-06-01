@@ -77,8 +77,10 @@ t_stack					*cut(t_stack **top);
 void					free_stack(t_stack **top);
 void					str_exit(t_stack **a, t_stack **b, int msg);
 
-int						checker(t_stack **a, t_stack **b);
+int						check_digits(char *str);
+int						check_sorted(t_stack **a, t_stack **b);
 int						check_duplicate(t_stack *top);
+int						check_data(char *data);
 int						read_from_stdin(t_stack **a, t_stack **b, int viz);
 int						fill_stack(int argc, char **argv, t_stack **a);
 
@@ -102,5 +104,6 @@ void					sort_3(t_stack **a);
 void					sort_4(t_stack **a, t_stack **b);
 void					sort_5(t_stack **a, t_stack **b);
 int						do_operations(char *str, t_stack **a, t_stack **b, int len);
+int						undo_operations(char *str, t_stack **a, t_stack **b);
 
 #endif

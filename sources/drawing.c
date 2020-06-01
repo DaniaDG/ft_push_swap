@@ -26,30 +26,6 @@ void		put_pixel(t_visual *ptr, int x, int y, int color)
 	}
 }
 
-static double	percent(int start, int end, int current)
-{
-	double delta;
-
-	delta = end - start;
-	return ((delta == 0) ? 0.0 : (current / delta));
-}
-
-int				color(int current, int max, int color1, int color2)
-{
-	int		r;
-	int		g;
-	int		b;
-	int		min;
-	double	k;
-
-	min = 0;
-	k = percent(min, max, current);
-	r = (int)(red(color1) + (red(color2) - red(color1)) * k);
-	g = (int)(green(color1) + (green(color2) - green(color1)) * k);
-	b = (int)(blue(color1) + (blue(color2) - blue(color1)) * k);
-	return (rgb(r, g, b));
-}
-
 void		draw_stack(t_visual *ptr, t_stack *top, int len, int stack)
 {
 	t_stack		*tmp;
@@ -83,14 +59,11 @@ void		draw_stack(t_visual *ptr, t_stack *top, int len, int stack)
 	}
 }
 
-
 int			drawing(t_visual *ptr, t_stack *a, t_stack *b, int len)
 {
 	ft_bzero(ptr->data_addr, IMG_W * IMG_H * (ptr->bits_per_pixel / 8));
 	draw_stack(ptr, a, len, 0);
 	draw_stack(ptr, b, len, 1);
-	//draw_help(ptr);
 	mlx_put_image_to_window(ptr->mlx, ptr->win, ptr->img, 0, 0);
-
 	return (0);
 }

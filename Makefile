@@ -34,7 +34,7 @@ MINILIBX = $(MINILIBX_DIRECTORY)libmlx.a
 MINILIBX_DIRECTORY = ./minilibx_macos/
 MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
 
-# PUSH_SWAP
+
 
 HEADERS_LIST = ft_push_swap.h viz.h
 HEADERS_DIRECTORY = includes/
@@ -43,17 +43,17 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = sources/
 SOURCES_LIST = free_functions.c list_functions.c operations.c \
-check_functions.c
+check_functions.c get_index.c fill_stack.c do_undo_operations.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
 OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))
 OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS_LIST))
 
-####
+####CHECKER
 
 #PS_SOURCES_DIRECTORY = sources/
-CH_SOURCES_LIST = checker.c 
+CH_SOURCES_LIST = main_checker.c read_from_stdin.c  
 CH_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(CH_SOURCES_LIST))
 
 CH_OBJECTS_LIST = $(patsubst %.c, %.o, $(CH_SOURCES_LIST))
@@ -63,14 +63,15 @@ CH_OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(CH_OBJECTS_LIST))
 #VIZUALIZER
 
 VS_SOURCES_DIRECTORY = sources/
-VS_SOURCES_LIST = viz.c init.c drawing.c rgb.c help.c
+VS_SOURCES_LIST = main_vizualizer.c init.c drawing.c rgb.c gradient.c help.c
 VS_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(VS_SOURCES_LIST))
 
 VS_OBJECTS_LIST = $(patsubst %.c, %.o, $(VS_SOURCES_LIST))
 VS_OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(VS_OBJECTS_LIST))
 
+# PUSH_SWAP
 
-PS_SOURCES_LIST = push_swap.c count_num_oper.c choose_b.c sorting.c sort_short.c
+PS_SOURCES_LIST = main_push_swap.c get_markup_status.c count_num_oper.c choose_b.c sorting.c sort_short.c
 PS_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(PS_SOURCES_LIST))
 
 PS_OBJECTS_LIST = $(patsubst %.c, %.o, $(PS_SOURCES_LIST))
@@ -115,7 +116,7 @@ $(LIBFT):
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 
 $(MINILIBX):
-	@echo "$(NAME): $(GREEN)Creating $(MINILIBX)...$(RESET)"
+	@echo "$(MINILIBX): $(GREEN)Creating $(MINILIBX)...$(RESET)"
 	@$(MAKE) -sC $(MINILIBX_DIRECTORY)
 
 clean:
@@ -130,7 +131,7 @@ fclean: clean
 	@rm -f $(LIBFT)
 	@echo "$(NAME_CH): $(RED)$(LIBFT) was deleted$(RESET)"
 	@rm -f $(MINILIBX)
-	@echo "$(NAME): $(RED)$(MINILIBX) was deleted$(RESET)"
+	@echo "$(MINILIBX): $(RED)$(MINILIBX) was deleted$(RESET)"
 	@rm -f $(NAME_CH)
 	@echo "$(NAME_CH): $(RED)$(NAME_CH) was deleted$(RESET)"
 	@rm -f $(NAME_PS)
