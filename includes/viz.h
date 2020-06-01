@@ -28,7 +28,7 @@
 # define MENU_H		100
 # define MENU_W		100
 
-# define HEIGHT		500
+# define HEIGHT		550
 # define WIDTH		1000
 # define MAX_NUM	100
 
@@ -86,8 +86,9 @@ int					red(int rgb);
 int					green(int rgb);
 int					blue(int rgb);
 int					rgb(int r, int g, int b);
-int					check_len2(char *str, t_stack **a, t_stack **b);
-int					check_len3(char *str, t_stack **a, t_stack **b);
 int					drawing(t_visual *ptr, t_stack *a, t_stack *b, int len);
+void				draw_help(t_visual *ptr);
+void				draw_ok(t_visual *ptr);
+void				draw_ko(t_visual *ptr);
 
 #endif

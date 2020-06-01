@@ -101,6 +101,6 @@ void					sort(t_stack **a, t_stack **b, t_stack **markup);
 void					sort_3(t_stack **a);
 void					sort_4(t_stack **a, t_stack **b);
 void					sort_5(t_stack **a, t_stack **b);
-int						do_operations(char *str, t_stack **a, t_stack **b);
+int						do_operations(char *str, t_stack **a, t_stack **b, int len);
 
 #endif

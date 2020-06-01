@@ -63,7 +63,7 @@ CH_OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(CH_OBJECTS_LIST))
 #VIZUALIZER
 
 VS_SOURCES_DIRECTORY = sources/
-VS_SOURCES_LIST = viz.c init.c drawing.c rgb.c
+VS_SOURCES_LIST = viz.c init.c drawing.c rgb.c help.c
 VS_SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(VS_SOURCES_LIST))
 
 VS_OBJECTS_LIST = $(patsubst %.c, %.o, $(VS_SOURCES_LIST))

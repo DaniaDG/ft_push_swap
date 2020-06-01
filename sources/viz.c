@@ -69,45 +69,59 @@ int		key_release(int key, t_visual *ptr)
 	return (0);
 }
 
+void	go_next(t_visual *ptr)
+{
+	do_operations(ptr->op_curr_list->op, &ptr->a, &ptr->b,
+					ft_strlen(ptr->op_curr_list->op));
+	ptr->op_curr_list = ptr->op_curr_list->next;
+	ptr->prev = 1;
+	if (!ptr->op_curr_list)
+	{
+		ptr->op_curr_list = ptr->op_end_list;
+		ptr->next = 0;
+	}
+	drawing(ptr, ptr->a, ptr->b, ptr->len);
+	if (!ptr->next)
+	{
+		if (checker(&ptr->a, &ptr->b))
+				draw_ok(ptr);
+		else
+			draw_ko(ptr);
+	}	
+}
+
+void	go_back(t_visual *ptr)
+{
+	if (ptr->next)
+		ptr->op_curr_list = ptr->op_curr_list->prev;
+	if (!ptr->op_curr_list)
+	{
+		ptr->op_curr_list = ptr->op_begin_list;
+		ptr->prev = 0;
+	}
+	else
+	{
+		undo_operations(ptr->op_curr_list->op, &ptr->a, &ptr->b);
+		ptr->next = 1;
+	}
+	drawing(ptr, ptr->a, ptr->b, ptr->len);
+}
+
 int		key_press(int key, t_visual *ptr)
 {
 	if (key == 53)
 		turn_off(ptr);
 	if (key == 124 && ptr->next)
-	{
-		do_operations(ptr->op_curr_list->op, &ptr->a, &ptr->b);
-		ptr->op_curr_list = ptr->op_curr_list->next;
-		ptr->prev = 1;
-		if (!ptr->op_curr_list)
-		{
-			ptr->op_curr_list = ptr->op_end_list;
-			ptr->next = 0;
-		}
-		drawing(ptr, ptr->a, ptr->b, ptr->len);
-	}
+		go_next(ptr);
 	if (key == 123 && ptr->prev)
-	{
-		if (ptr->next)
-			ptr->op_curr_list = ptr->op_curr_list->prev;
-		if (!ptr->op_curr_list)
-		{
-			ptr->op_curr_list = ptr->op_begin_list;
-			ptr->prev = 0;
-		}
-		else
-		{
-			undo_operations(ptr->op_curr_list->op, &ptr->a, &ptr->b);
-			ptr->next = 1;
-		}
-		drawing(ptr, ptr->a, ptr->b, ptr->len);
-	}
+		go_back(ptr);
 	return (0);
 }
 
 void	hooks(t_visual *ptr)
 {
 	mlx_hook(ptr->win, 2, 0, key_press, ptr);
-	//mlx_hook(ptr->win, 3, 0, key_press, ptr);
+	//mlx_hook(ptr->win, 3, 0, key_release, ptr);
 	//mlx_hook(ptr->win, 4, 0, mouse_press, ptr);
 	//mlx_hook(ptr->win, 5, 0, mouse_release, ptr);
 	//mlx_hook(ptr->win, 6, 0, mouse_move, ptr);
@@ -133,9 +147,8 @@ static t_operations		*create_op_elem(char *data)
 	return (tmp);
 }
 
-int		add_op_to_list(t_operations **begin_list, t_operations **end_list, char *data)
+int		check_data(char *data)
 {
-	t_operations	*tmp;
 	int				len;
 
 	len = ft_strlen(data);
@@ -143,16 +156,27 @@ int		add_op_to_list(t_operations **begin_list, t_operations **end_list, char *da
 		return (0);
 	if (len == 2)
 	{
-		if (!(ft_strequ(data, "sa") || ft_strequ(data, "sb") || ft_strequ(data, "ss") ||
-			ft_strequ(data, "pa") || ft_strequ(data, "pb") ||
-			ft_strequ(data, "ra") || ft_strequ(data, "rb") || ft_strequ(data, "rr")))
+		if (!(ft_strequ(data, "sa") || ft_strequ(data, "sb") ||
+			ft_strequ(data, "ss") || ft_strequ(data, "pa") ||
+			ft_strequ(data, "pb") || ft_strequ(data, "ra") ||
+			ft_strequ(data, "rb") || ft_strequ(data, "rr")))
 			return (0);
 	}
 	if (len == 3)
 	{
-		if (!(ft_strequ(data, "rra") || ft_strequ(data, "rrb") || ft_strequ(data, "rrr")))
+		if (!(ft_strequ(data, "rra") || ft_strequ(data, "rrb") ||
+			ft_strequ(data, "rrr")))
 			return (0);
 	}
+	return (1);
+}
+
+int		add_op_to_list(t_operations **begin_list, t_operations **end_list, char *data)
+{
+	t_operations	*tmp;
+	
+	if(!check_data(data))
+		return (0);
 	if (!(tmp = create_op_elem(data)))
 	{
 		free_op_list(begin_list);
@@ -169,7 +193,6 @@ int		add_op_to_list(t_operations **begin_list, t_operations **end_list, char *da
 		tmp->prev = *end_list;
 		*end_list = (*end_list)->next;
 	}
-	
 	return (1);
 }
 
@@ -211,16 +234,19 @@ int		main(int argc, char **argv)
 	ptr = init_ptr();
 	if (!(fill_stack(argc, argv, &ptr->a)))
 		str_exit(&ptr->a, &ptr->b, 2);
-	if (!(check_duplicate(ptr->a)))
+	if (!(ptr->len = check_duplicate(ptr->a)))
 		str_exit(&ptr->a, &ptr->b, 2);
+	if (ptr->len == 1 || ptr->len > 500)
+		str_exit(&ptr->a, &ptr->b, 3);
 	if (!(get_operations(&ptr->op_begin_list, &ptr->op_end_list)))
 		str_exit(&ptr->a, &ptr->b, 2);
-	ptr->len = len_stack(ptr->a);
+	if (checker(&ptr->a, &ptr->b) && !ptr->op_begin_list)
+		str_exit(&ptr->a, &ptr->b, 4);
 	get_index(ptr->a, ptr->len);
 	ptr->op_curr_list = ptr->op_begin_list;
-	//printf("begin = %s, end = %s\n", ptr->op_begin_list->op, ptr->op_end_list->op);
 	init_mlx(ptr);
 	drawing(ptr, ptr->a, ptr->b, ptr->len);
+	draw_help(ptr);
 	hooks(ptr);
 	return (0);
 }

@@ -50,6 +50,10 @@ void		str_exit(t_stack **a, t_stack **b, int msg)
 		write(1, "\033[032mOK\n", 10);
 	if (msg == 2)
 		write(1, "\033[033mERROR\n", 13);
+	if (msg == 3)
+		ft_putstr("stack length should be between 2 and 500\n");
+	if (msg == 4)
+		ft_putstr("the stack is already sorted\n");
 	write(1, "\033[0m", 5);
 	exit (1);
 }

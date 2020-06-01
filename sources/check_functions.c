@@ -58,52 +58,33 @@ int		fill_stack(int argc, char **argv, t_stack **a)
 	return (1);
 }
 
-int		check_len2(char *str, t_stack **a, t_stack **b)
+int		do_operations(char *str, t_stack **a, t_stack **b, int len)
 {
-	if (ft_strequ(str, "sa"))
+	if (ft_strequ(str, "rra") && len == 3)
+		reverse_rotate(a, NULL);
+	else if (ft_strequ(str, "rrb") && len == 3)
+		reverse_rotate(b, NULL);
+	else if (ft_strequ(str, "rrr") && len == 3)
+		reverse_rotate_all(a, b, NULL);
+	else if (ft_strequ(str, "sa") && len == 2)
 		swap(a, NULL);
-	else if (ft_strequ(str, "sb"))
+	else if (ft_strequ(str, "sb") && len == 2)
 		swap(b, NULL);
-	else if (ft_strequ(str, "ss"))
+	else if (ft_strequ(str, "ss") && len == 2)
 		swap_all(a, b, NULL);
-	else if (ft_strequ(str, "pa"))
+	else if (ft_strequ(str, "pa") && len == 2)
 		push(b, a, NULL);
-	else if (ft_strequ(str, "pb"))
+	else if (ft_strequ(str, "pb") && len == 2)
 		push(a, b, NULL);
-	else if (ft_strequ(str, "ra"))
+	else if (ft_strequ(str, "ra") && len == 2)
 		rotate(a, NULL);
-	else if (ft_strequ(str, "rb"))
+	else if (ft_strequ(str, "rb") && len == 2)
 		rotate(b, NULL);
-	else if (ft_strequ(str, "rr"))
+	else if (ft_strequ(str, "rr") && len == 2)
 		rotate_all(a, b, NULL);
 	else
 		return (0);
 	return (1);
-}
-
-int		check_len3(char *str, t_stack **a, t_stack **b)
-{
-	if (ft_strequ(str, "rra"))
-		reverse_rotate(a, NULL);
-	else if (ft_strequ(str, "rrb"))
-		reverse_rotate(b, NULL);
-	else if (ft_strequ(str, "rrr"))
-		reverse_rotate_all(a, b, NULL);
-	else
-		return (0);
-	return (1);
-}
-
-int		do_operations(char *str, t_stack **a, t_stack **b)
-{
-	int		len;
-
-	len = ft_strlen(str);
-	if (len == 2)
-		return(check_len2(str, a, b));
-	if (len == 3)
-		return(check_len3(str, a, b));
-	return (0);
 }
 
 int		read_from_stdin(t_stack **a, t_stack **b, int viz)
@@ -115,7 +96,7 @@ int		read_from_stdin(t_stack **a, t_stack **b, int viz)
 	{
 		while (get_next_line(0, &line) == 1)
 		{
-			if (!(do_operations(line, a, b)))
+			if (!(do_operations(line, a, b, ft_strlen(line))))
 				return (0);
 			ft_memdel((void**)&line);
 		}

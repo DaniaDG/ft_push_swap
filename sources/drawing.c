@@ -60,7 +60,7 @@ void		draw_stack(t_visual *ptr, t_stack *top, int len, int stack)
 	int			max = len;
 
 	k = len - 1;
-	step = HEIGHT / len;
+	step = (HEIGHT - 50) / len;
 	len = len_stack(top);
 	if (!top)
 		return ;
@@ -89,6 +89,7 @@ int			drawing(t_visual *ptr, t_stack *a, t_stack *b, int len)
 	ft_bzero(ptr->data_addr, IMG_W * IMG_H * (ptr->bits_per_pixel / 8));
 	draw_stack(ptr, a, len, 0);
 	draw_stack(ptr, b, len, 1);
+	//draw_help(ptr);
 	mlx_put_image_to_window(ptr->mlx, ptr->win, ptr->img, 0, 0);
 
 	return (0);
