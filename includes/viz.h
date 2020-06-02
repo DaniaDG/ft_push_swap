@@ -62,7 +62,7 @@ typedef struct		s_visual
 	t_stack			*b;
 	int				prev;
 	int				next;
-	//t_button		space;
+	t_button		space;
 	int				len;
 }					t_visual;
 
