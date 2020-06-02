@@ -21,13 +21,6 @@ int		turn_off(void *param)
 	exit(0);
 }
 
-int		key_release(int key, t_visual *ptr)
-{
-	if (key == 49)
-		ptr->space = NOT_PRESSED;
-	return (0);
-}
-
 void	go_next(t_visual *ptr)
 {
 	do_operations(ptr->op_curr_list->op, &ptr->a, &ptr->b,
@@ -66,6 +59,18 @@ void	go_back(t_visual *ptr)
 	drawing(ptr, ptr->a, ptr->b, ptr->len);
 }
 
+int		animation(t_visual *ptr)
+{
+	if (ptr->next && ptr->space == IS_PRESSED)
+	{
+		go_next(ptr);
+		mlx_do_sync(ptr);
+	}
+	if (!ptr->next)
+		ptr->space = NOT_PRESSED;
+	return (0);
+}
+
 int		key_press(int key, t_visual *ptr)
 {
 	if (key == 53)
@@ -74,12 +79,34 @@ int		key_press(int key, t_visual *ptr)
 		go_next(ptr);
 	if (key == 123 && ptr->prev)
 		go_back(ptr);
+	if (key == 49)
+	{
+		ptr->space = ptr->space == NOT_PRESSED ? IS_PRESSED : NOT_PRESSED;
+		mlx_loop_hook(ptr->mlx, &animation, ptr);
+	}
+	if (key == 35)
+		ptr->flag = 0;
+	return (0);
+}
+
+int		key_press2(int key, t_visual *ptr)
+{
+	if (key == 49)
+	{
+		ptr->flag = 1;
+		while (ptr->next && ptr->flag)
+		{
+			go_next(ptr);
+			mlx_do_sync(ptr);
+		}
+	}
 	return (0);
 }
 
 void	hooks(t_visual *ptr)
 {
 	mlx_hook(ptr->win, 2, 0, key_press, ptr);
+	//mlx_hook(ptr->win, 2, 0, key_press2, ptr);
 	//mlx_hook(ptr->win, 3, 0, key_release, ptr);
 	//mlx_hook(ptr->win, 4, 0, mouse_press, ptr);
 	//mlx_hook(ptr->win, 5, 0, mouse_release, ptr);

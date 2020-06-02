@@ -64,6 +64,7 @@ typedef struct		s_visual
 	int				next;
 	t_button		space;
 	int				len;
+	int				flag;
 }					t_visual;
 
 t_visual			*init_ptr(void);

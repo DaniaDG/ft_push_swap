@@ -44,6 +44,7 @@ t_visual	*init_ptr(void)
 	ptr->op_curr_list = NULL;
 	ptr->space = NOT_PRESSED;
 	ptr->next = 1;
-	ptr->prev = 0;	
+	ptr->prev = 0;
+	ptr->flag = 0;
 	return (ptr);
 }
