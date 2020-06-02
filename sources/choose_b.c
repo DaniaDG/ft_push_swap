@@ -43,7 +43,7 @@ static void		get_res(t_stack **tmp_b, t_stack **res, t_op_count *tmp,
 	*tmp_b = (*tmp_b)->down;
 }
 
-t_stack	*choose_b(t_stack *a, t_stack *b, t_op_count *op_count)
+t_stack			*choose_b(t_stack *a, t_stack *b, t_op_count *op_count)
 {
 	t_stack		*tmp_b;
 	t_stack		*position;

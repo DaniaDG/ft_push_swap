@@ -16,8 +16,8 @@ NAME_VS = visualizer
 
 CC = gcc 
 FLAGS = -Wextra -Wall -Werror -g
-#LIBRARIES = -lm -lft -L$(LIBFT_DIRECTORY)
-LIBRARIES = -lmlx -lm -lft -L$(LIBFT_DIRECTORY) -L$(MINILIBX_DIRECTORY) -framework OpenGL -framework AppKit
+LIBRARIES = -lm -lft -L$(LIBFT_DIRECTORY)
+VIS_LIBRARIES = -lmlx -lm -L$(MINILIBX_DIRECTORY) -framework OpenGL -framework AppKit
 INCLUDES = -I $(HEADERS_DIRECTORY) -I $(LIBFT_HEADERS_DIRECTORY) -I$(MINILIBX_HEADERS)
 #-I$(MINILIBX_HEADERS)
 #-Wall -Werror -Wextra
@@ -42,7 +42,7 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 
 SOURCES_DIRECTORY = sources/
-SOURCES_LIST = free_functions.c list_functions.c operations.c \
+SOURCES_LIST = free_functions.c list_functions.c operations_1.c operations_2.c  \
 check_functions.c get_index.c fill_stack.c do_undo_operations.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
@@ -88,17 +88,17 @@ RESET = \033[0m
 
 all: $(NAME_CH) $(NAME_PS) $(NAME_VS)
 
-$(NAME_CH): $(OBJECTS_DIRECTORY) $(OBJECTS) $(CH_OBJECTS) $(LIBFT) $(MINILIBX)
+$(NAME_CH): $(OBJECTS_DIRECTORY) $(OBJECTS) $(CH_OBJECTS) $(LIBFT)
 	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(CH_OBJECTS) $(LIBRARIES) -o $(NAME_CH)
 	@echo "\n$(NAME_CH): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_CH): $(GREEN)$(NAME_CH) was created$(RESET)"
 
 $(NAME_VS): $(LIBFT) $(MINILIBX) $(OBJECTS_DIRECTORY) $(OBJECTS) $(VS_OBJECTS)
-	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(VS_OBJECTS) -o $(NAME_VS)
+	@$(CC) $(FLAGS) $(VIS_LIBRARIES) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(VS_OBJECTS) -o $(NAME_VS)
 	@echo "\n$(NAME_VS): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_VS): $(GREEN)$(NAME_VS) was created$(RESET)"
 
-$(NAME_PS): $(OBJECTS_DIRECTORY) $(OBJECTS) $(PS_OBJECTS) $(LIBFT) $(MINILIBX)
+$(NAME_PS): $(OBJECTS_DIRECTORY) $(OBJECTS) $(PS_OBJECTS) $(LIBFT)
 	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(PS_OBJECTS) $(LIBRARIES) -o $(NAME_PS)
 	@echo "\n$(NAME_PS): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_PS): $(GREEN)$(NAME_PS) was created$(RESET)"

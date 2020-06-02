@@ -19,7 +19,7 @@ static void	error(char *str)
 	exit(1);
 }
 
-void	init_mlx(t_visual *ptr)
+void		init_mlx(t_visual *ptr)
 {
 	if (!(ptr->mlx = mlx_init()))
 		error("mlx init error");
@@ -31,7 +31,7 @@ void	init_mlx(t_visual *ptr)
 										&(ptr->size_line), &(ptr->endian));
 }
 
-t_visual		*init_ptr(void)
+t_visual	*init_ptr(void)
 {
 	t_visual	*ptr;
 

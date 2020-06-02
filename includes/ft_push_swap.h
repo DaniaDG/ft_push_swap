@@ -32,7 +32,7 @@ typedef enum
 {
 	TRUE,
 	FALSE
-}	t_bool;
+}						t_bool;
 
 typedef struct			s_stack
 {
@@ -61,6 +61,12 @@ typedef struct			s_op_count
 	int					all;
 }						t_op_count;
 
+typedef struct			s_operations
+{
+	char				*op;
+	struct s_operations	*next;
+	struct s_operations	*prev;
+}						t_operations;
 
 t_stack					*ft_create_elem(int data);
 void					ft_push_down(t_stack **top, int data);
@@ -75,6 +81,7 @@ void					swap_all(t_stack **a, t_stack **b, char *str);
 void					add(t_stack **top, t_stack *tmp);
 t_stack					*cut(t_stack **top);
 void					free_stack(t_stack **top);
+void					free_op_list(t_operations **begin_list);
 void					str_exit(t_stack **a, t_stack **b, int msg);
 
 int						check_digits(char *str);
@@ -90,8 +97,6 @@ int						all_true(t_stack *top);
 void					print_stack(t_stack *a, t_stack *b);
 t_stack					*get_markup(t_stack *top);
 
-int						ft_min(int a, int b);
-int						ft_abs(int a);
 t_op_count				count_num_of_operations(t_op_count *tmp);
 t_stack					*choose_b(t_stack *a, t_stack *b, t_op_count *op_count);
 t_stack					*find_position(t_stack *a, t_stack *b);

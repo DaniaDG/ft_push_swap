@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include "ft_push_swap.h"
-#include "viz.h"
+//#include "viz.h"
 #include "libft.h"
 
-void		free_stack(t_stack **top)
+void	free_stack(t_stack **top)
 {
 	t_stack		*begin;
 
@@ -54,7 +54,7 @@ void	free_op_list(t_operations **begin_list)
 	}
 }
 
-void		str_exit(t_stack **a, t_stack **b, int msg)
+void	str_exit(t_stack **a, t_stack **b, int msg)
 {
 	free_stack(a);
 	free_stack(b);

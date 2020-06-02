@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_push_swap.h"
+#include "libft.h"
 
 static t_op_count		case_0(t_op_count *tmp,  int rr, int rrr)
 {

@@ -13,10 +13,6 @@
 #ifndef VIZ_H
 # define VIZ_H
 
-# include <unistd.h>
-# include <stdio.h>
-# include <math.h>
-# include <errno.h>
 # include "mlx.h"
 # include "libft.h"
 # include "ft_push_swap.h"
@@ -50,13 +46,6 @@ typedef enum
 	NOT_PRESSED
 }					t_button;
 
-typedef struct			s_operations
-{
-	char				*op;
-	struct s_operations	*next;
-	struct s_operations	*prev;
-}						t_operations;
-
 typedef struct		s_visual
 {
 	void			*mlx;
@@ -66,7 +55,6 @@ typedef struct		s_visual
 	int				bits_per_pixel;
 	int				size_line;
 	int				endian;
-
 	t_operations	*op_begin_list;
 	t_operations	*op_end_list;
 	t_operations	*op_curr_list;
@@ -74,15 +62,12 @@ typedef struct		s_visual
 	t_stack			*b;
 	int				prev;
 	int				next;
-	t_button		space;
-	
+	//t_button		space;
 	int				len;
-	
 }					t_visual;
 
 t_visual			*init_ptr(void);
 void				init_mlx(t_visual *ptr);
-void				free_op_list(t_operations **begin_list);
 int					red(int rgb);
 int					green(int rgb);
 int					blue(int rgb);

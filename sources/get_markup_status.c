@@ -12,7 +12,7 @@
 
 #include "ft_push_swap.h"
 
-int		get_status(t_stack *top)
+int			get_status(t_stack *top)
 {
 	t_stack	*tmp;
 	int		max;

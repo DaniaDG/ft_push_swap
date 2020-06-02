@@ -13,17 +13,6 @@
 #include "ft_push_swap.h"
 #include "libft.h"
 
-int		ft_abs(int a)
-{
-	return (a >= 0 ? a : -a);
-}
-
-int		ft_min(int a, int b)
-{
-	return (a <= b ? a : b);
-}
-
-
 int		all_true(t_stack *top)
 {
 	t_stack		*tmp;

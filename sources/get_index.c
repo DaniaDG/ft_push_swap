@@ -12,7 +12,7 @@
 
 #include "ft_push_swap.h"
 
-static t_stack		*get_min(t_stack *top)
+static t_stack	*get_min(t_stack *top)
 {
 	t_stack		*min;
 	t_stack		*tmp;
@@ -28,7 +28,7 @@ static t_stack		*get_min(t_stack *top)
 	return (min);
 }
 
-void	get_index(t_stack *top, int len)
+void			get_index(t_stack *top, int len)
 {
 	t_stack	*max;
 	t_stack	*min;
