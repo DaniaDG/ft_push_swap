@@ -84,8 +84,6 @@ int		key_press(int key, t_visual *ptr)
 		ptr->space = ptr->space == NOT_PRESSED ? IS_PRESSED : NOT_PRESSED;
 		mlx_loop_hook(ptr->mlx, &animation, ptr);
 	}
-	if (key == 35)
-		ptr->flag = 0;
 	return (0);
 }
 
