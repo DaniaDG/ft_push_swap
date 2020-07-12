@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    benchmark.sh                                       :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vbrazhni <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/29 17:15:18 by vbrazhni          #+#    #+#              #
-#    Updated: 2018/08/29 17:15:19 by vbrazhni         ###   ########.fr        #
+#    Updated: 2020/07/12 20:17:56 by Alkor            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ LIMIT=700
 FILE=problem_100
 SUM=0
 
-for i in {1..10}
+for i in {1..25}
 do
-		export ARG=`ruby -e "puts (1..25).to_a.shuffle.join(' ')"`
+		export ARG=`ruby -e "puts (1..500).to_a.shuffle.join(' ')"`
 		#echo $ARG
 		if ./push_swap $ARG | ./checker $ARG | grep -q KO
 		then

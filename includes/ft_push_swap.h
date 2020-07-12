@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 09:18:37 by bsausage          #+#    #+#             */
-/*   Updated: 2020/02/12 09:18:37 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/07/12 18:57:09 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void					swap_all(t_stack **a, t_stack **b, char *str);
 void					add(t_stack **top, t_stack *tmp);
 t_stack					*cut(t_stack **top);
 void					free_stack(t_stack **top);
+void					free_all(t_ps *ps);
 void					free_op_list(t_operations **begin_list);
 void					str_exit(t_stack **a, t_stack **b, int msg);
 

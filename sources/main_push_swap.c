@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 09:50:57 by bsausage          #+#    #+#             */
-/*   Updated: 2020/07/12 17:27:46 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/07/12 18:57:02 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,15 @@ int				main(int argc, char **argv)
 		str_exit(&ps->a, &ps->b, 2);
 	if (!(len = check_duplicate(ps->a)))
 		str_exit(&ps->a, &ps->b, 2);
-	if (check_sorted(&ps->a, &ps->b))
-		return (0);
-	get_index(ps->a, len);
-	if (!(short_sort(&ps->a, &ps->b, len)))
+	if (!check_sorted(&ps->a, &ps->b))
 	{
-		ps->markup = get_markup(ps->a);
-		sort(&ps->a, &ps->b, &ps->markup);
+		get_index(ps->a, len);
+		if (!(short_sort(&ps->a, &ps->b, len)))
+		{
+			ps->markup = get_markup(ps->a);
+			sort(&ps->a, &ps->b, &ps->markup);
+		}
 	}
-	free_stack(&ps->a);
-	free_stack(&ps->b);
-	ft_memdel((void**)&ps);
+	free_all(ps);
 	return (0);
 }

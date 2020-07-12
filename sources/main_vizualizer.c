@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 09:06:01 by bsausage          #+#    #+#             */
-/*   Updated: 2020/07/12 13:14:50 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/07/12 23:55:03 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int		main(int argc, char **argv)
 	ptr = NULL;
 	if (argc == 1)
 		return (0);
-	ptr = init_ptr();
+	if (!(ptr = init_ptr()))
+		return (0);
 	if (!(fill_stack(argc, argv, &ptr->a)))
 		str_exit(&ptr->a, &ptr->b, 2);
 	if (!(ptr->len = check_duplicate(ptr->a)))
