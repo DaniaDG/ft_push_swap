@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_push_swap.h"
-//#include "viz.h"
 #include "libft.h"
 
 void	free_stack(t_stack **top)
@@ -37,7 +36,7 @@ void	free_stack(t_stack **top)
 			(*top)->up->down = NULL;
 			ft_memdel((void**)&((*top)->up));
 		}
-	ft_memdel((void**)top);
+		ft_memdel((void**)top);
 	}
 }
 
@@ -69,5 +68,5 @@ void	str_exit(t_stack **a, t_stack **b, int msg)
 	if (msg == 4)
 		ft_putstr("the stack is already sorted\n");
 	write(1, "\033[0m", 5);
-	exit (1);
+	exit(1);
 }

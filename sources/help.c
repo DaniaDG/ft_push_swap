@@ -14,7 +14,6 @@
 #include "../ok.xpm"
 #include "../ko.xpm"
 
-
 void		draw_help(t_visual *ptr)
 {
 	mlx_string_put(ptr->mlx, ptr->win, 10, 520, SILVER,
@@ -23,20 +22,24 @@ void		draw_help(t_visual *ptr)
 
 void		draw_ok(t_visual *ptr)
 {
-	int		height = 0;
-	int		width = 0;
+	int		height;
+	int		width;
 	void	*ptr_img;
 
+	height = 0;
+	width = 0;
 	ptr_img = mlx_xpm_file_to_image(ptr->mlx, "ok.xpm", &width, &height);
 	mlx_put_image_to_window(ptr->mlx, ptr->win, ptr_img, 500, 0);
 }
 
 void		draw_ko(t_visual *ptr)
 {
-	int		height = 0;
-	int		width = 0;
+	int		height;
+	int		width;
 	void	*ptr_img;
 
+	height = 0;
+	width = 0;
 	ptr_img = mlx_xpm_file_to_image(ptr->mlx, "ko.xpm", &width, &height);
 	mlx_put_image_to_window(ptr->mlx, ptr->win, ptr_img, 600, 130);
 }

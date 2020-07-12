@@ -69,4 +69,3 @@ void		push(t_stack **top1, t_stack **top2, char *str)
 	(*top2)->up = (*top2)->up->down;
 	*top2 = (*top2)->up;
 }
-

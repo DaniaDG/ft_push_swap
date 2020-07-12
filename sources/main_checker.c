@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   main_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 09:06:01 by bsausage          #+#    #+#             */
-/*   Updated: 2020/02/12 09:06:02 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/07/12 13:29:39 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int		main(int argc, char **argv)
 {
-	t_stack		*a = NULL;
-	t_stack		*b = NULL;
+	t_stack		*a;
+	t_stack		*b;
 
+	a = NULL;
+	b = NULL;
 	if (argc == 1)
 		return (0);
 	if (!(fill_stack(argc, argv, &a)))
@@ -31,4 +33,3 @@ int		main(int argc, char **argv)
 		str_exit(&a, &b, 1);
 	return (0);
 }
-

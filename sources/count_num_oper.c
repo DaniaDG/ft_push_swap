@@ -13,7 +13,7 @@
 #include "ft_push_swap.h"
 #include "libft.h"
 
-static t_op_count		case_0(t_op_count *tmp,  int rr, int rrr)
+static t_op_count	case_0(t_op_count *tmp, int rr, int rrr)
 {
 	t_op_count		t;
 
@@ -27,7 +27,7 @@ static t_op_count		case_0(t_op_count *tmp,  int rr, int rrr)
 	return (t);
 }
 
-static t_op_count		case_1(t_op_count *tmp,  int rr, int rrr)
+static t_op_count	case_1(t_op_count *tmp, int rr, int rrr)
 {
 	t_op_count		t;
 
@@ -37,11 +37,11 @@ static t_op_count		case_1(t_op_count *tmp,  int rr, int rrr)
 	t.rra = 0;
 	t.rrb = tmp->rrb;
 	t.rrr = rrr;
-	t.all = t.ra + t.rrb; 
+	t.all = t.ra + t.rrb;
 	return (t);
 }
 
-static t_op_count		case_2(t_op_count *tmp,  int rr, int rrr)
+static t_op_count	case_2(t_op_count *tmp, int rr, int rrr)
 {
 	t_op_count		t;
 
@@ -51,11 +51,11 @@ static t_op_count		case_2(t_op_count *tmp,  int rr, int rrr)
 	t.rra = tmp->rra;
 	t.rrb = 0;
 	t.rrr = rrr;
-	t.all = t.rb + t.rra; 
+	t.all = t.rb + t.rra;
 	return (t);
 }
 
-static t_op_count		case_3(t_op_count *tmp,  int rr, int rrr)
+static t_op_count	case_3(t_op_count *tmp, int rr, int rrr)
 {
 	t_op_count		t;
 
@@ -69,16 +69,16 @@ static t_op_count		case_3(t_op_count *tmp,  int rr, int rrr)
 	return (t);
 }
 
-t_op_count				count_num_of_operations(t_op_count *tmp)
+t_op_count			count_num_of_operations(t_op_count *tmp)
 {
-	t_op_count	t[4];
-	int			rr;
-	int			rrr;
-	int			i;
-	int 		res;
+	t_op_count		t[4];
+	int				rr;
+	int				rrr;
+	int				i;
+	int				res;
 
 	rr = tmp->ra && tmp->rb ? ft_min(tmp->ra, tmp->rb) : 0;
-	rrr = tmp->rra && tmp->rrb ? ft_min(tmp->rra, tmp->rrb) : 0;	
+	rrr = tmp->rra && tmp->rrb ? ft_min(tmp->rra, tmp->rrb) : 0;
 	t[0] = case_0(tmp, rr, 0);
 	t[1] = case_1(tmp, 0, 0);
 	t[2] = case_2(tmp, 0, 0);

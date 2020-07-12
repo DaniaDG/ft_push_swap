@@ -16,8 +16,9 @@ int			get_status(t_stack *top)
 {
 	t_stack	*tmp;
 	int		max;
-	int		i = 1;
+	int		i;
 
+	i = 1;
 	top->status = TRUE;
 	max = top->data;
 	tmp = top->down;

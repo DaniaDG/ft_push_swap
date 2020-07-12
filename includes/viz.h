@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viz.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 09:18:37 by bsausage          #+#    #+#             */
-/*   Updated: 2020/02/12 09:18:37 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/07/12 13:34:11 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "mlx.h"
 # include "libft.h"
 # include "ft_push_swap.h"
-
 
 # define IMG_H		500
 # define IMG_W		1000
@@ -39,12 +38,11 @@
 # define WHITE			0xFFFFFF
 # define BLACK			0x000000
 
-
 typedef enum
 {
 	IS_PRESSED,
 	NOT_PRESSED
-}					t_button;
+}	t_button;
 
 typedef struct		s_visual
 {
@@ -78,5 +76,11 @@ int					drawing(t_visual *ptr, t_stack *a, t_stack *b, int len);
 void				draw_help(t_visual *ptr);
 void				draw_ok(t_visual *ptr);
 void				draw_ko(t_visual *ptr);
+int					get_operations(t_operations **op_begin_list,
+						t_operations **op_end_list);
+void				hooks(t_visual *ptr);
+int					animation(t_visual *ptr);
+void				go_back(t_visual *ptr);
+void				go_next(t_visual *ptr);
 
 #endif

@@ -20,7 +20,7 @@ SUM=0
 
 for i in {1..10}
 do
-		export ARG=`ruby -e "puts (1..100).to_a.shuffle.join(' ')"`
+		export ARG=`ruby -e "puts (1..25).to_a.shuffle.join(' ')"`
 		#echo $ARG
 		if ./push_swap $ARG | ./checker $ARG | grep -q KO
 		then

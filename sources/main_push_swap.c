@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   main_push_swap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 09:50:57 by bsausage          #+#    #+#             */
-/*   Updated: 2020/02/21 09:50:59 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/07/12 13:31:20 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_push_swap.h"
 #include "libft.h"
 
-int		all_true(t_stack *top)
+int				all_true(t_stack *top)
 {
 	t_stack		*tmp;
 
 	if (top->status == FALSE)
-		return(0);
+		return (0);
 	tmp = top->down;
 	while (tmp != top)
 	{
 		if (tmp->status == FALSE)
-			return(0);
+			return (0);
 		tmp = tmp->down;
 	}
 	return (1);
 }
 
-t_stack		*find_position(t_stack *a, t_stack *b)
+t_stack			*find_position(t_stack *a, t_stack *b)
 {
 	t_stack		*tmp;
 	t_stack		*res;
@@ -80,7 +80,7 @@ t_op_count		assign_value(t_op_count tmp)
 	return (t);
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	t_ps		*ps;
 	int			len;

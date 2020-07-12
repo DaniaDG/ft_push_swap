@@ -32,7 +32,7 @@ typedef enum
 {
 	TRUE,
 	FALSE
-}						t_bool;
+}	t_bool;
 
 typedef struct			s_stack
 {
@@ -108,7 +108,8 @@ void					sort(t_stack **a, t_stack **b, t_stack **markup);
 void					sort_3(t_stack **a);
 void					sort_4(t_stack **a, t_stack **b);
 void					sort_5(t_stack **a, t_stack **b);
-int						do_operations(char *str, t_stack **a, t_stack **b, int len);
+int						do_operations(char *str, t_stack **a,
+										t_stack **b, int len);
 int						undo_operations(char *str, t_stack **a, t_stack **b);
 
 #endif

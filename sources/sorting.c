@@ -30,7 +30,7 @@ static void		pre_sort(t_stack **a, t_stack **b, t_stack *markup)
 		if (all_true(*a))
 			return ;
 		while ((*a)->status == TRUE)
-			rotate(a, RA);		
+			rotate(a, RA);
 		while ((*a)->status == FALSE)
 			push(a, b, PB);
 	}
@@ -73,7 +73,7 @@ static void		start_rotating(t_stack **a, t_stack **b, t_op_count *op_count)
 		reverse_rotate(b, RRB);
 }
 
-void	sort(t_stack **a, t_stack **b, t_stack **markup)
+void			sort(t_stack **a, t_stack **b, t_stack **markup)
 {
 	t_op_count	op_count;
 

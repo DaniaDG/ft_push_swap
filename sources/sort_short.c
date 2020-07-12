@@ -12,7 +12,7 @@
 
 #include "ft_push_swap.h"
 
-int		short_sort(t_stack **a, t_stack **b, int len)
+int			short_sort(t_stack **a, t_stack **b, int len)
 {
 	if (len == 3)
 		sort_3(a);
@@ -47,7 +47,7 @@ void		sort_3(t_stack **a)
 		{
 			swap(a, SA);
 			reverse_rotate(a, RRA);
-		}	
+		}
 	}
 }
 
@@ -98,4 +98,3 @@ void		sort_5(t_stack **a, t_stack **b)
 	push(b, a, PA);
 	push(b, a, PA);
 }
-
