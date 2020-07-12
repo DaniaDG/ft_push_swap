@@ -6,7 +6,7 @@
 /*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 09:50:57 by bsausage          #+#    #+#             */
-/*   Updated: 2020/07/12 13:31:20 by Alkor            ###   ########.fr       */
+/*   Updated: 2020/07/12 17:27:46 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int				main(int argc, char **argv)
 
 	if (argc == 1)
 		return (0);
-	ps = (t_ps *)malloc(sizeof(t_ps));
+	if (!(ps = (t_ps *)malloc(sizeof(t_ps))))
+		return (0);
 	ps->a = NULL;
 	ps->b = NULL;
 	if (!(fill_stack(argc, argv, &ps->a)))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsausage <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 13:16:07 by bsausage          #+#    #+#             */
-/*   Updated: 2020/02/12 13:16:08 by bsausage         ###   ########.fr       */
+/*   Updated: 2020/07/12 17:34:45 by Alkor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ void		push(t_stack **top1, t_stack **top2, char *str)
 {
 	if (str)
 		ft_putstr(str);
-	if (*top1 == NULL || *top2 == NULL || (*top1)->down == *top1)
+	if (!(*top1))
+		return ;
+	if (*top2 == NULL || (*top1)->down == *top1)
 	{
 		add(top2, cut(top1));
 		return ;

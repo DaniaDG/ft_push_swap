@@ -6,7 +6,7 @@
 #    By: Alkor <Alkor@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/25 14:23:51 by bsausage          #+#    #+#              #
-#    Updated: 2020/07/12 13:33:11 by Alkor            ###   ########.fr        #
+#    Updated: 2020/07/12 13:53:37 by Alkor            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,33 +78,33 @@ all: $(NAME_CH) $(NAME_PS) $(NAME_VS)
 
 $(NAME_CH): $(OBJECTS_DIRECTORY) $(OBJECTS) $(CH_OBJECTS) $(LIBFT)
 	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(CH_OBJECTS) $(LIBRARIES) -o $(NAME_CH)
-	@echo "\n$(NAME_CH): $(GREEN)object files were created$(RESET)"
+	@echo "$(NAME_CH): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_CH): $(GREEN)$(NAME_CH) was created$(RESET)"
 
 $(NAME_VS): $(LIBFT) $(MINILIBX) $(OBJECTS_DIRECTORY) $(OBJECTS) $(VS_OBJECTS)
 	@$(CC) $(FLAGS) $(VIS_LIBRARIES) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(VS_OBJECTS) -o $(NAME_VS)
-	@echo "\n$(NAME_VS): $(GREEN)object files were created$(RESET)"
+	@echo "$(NAME_VS): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_VS): $(GREEN)$(NAME_VS) was created$(RESET)"
 
 $(NAME_PS): $(OBJECTS_DIRECTORY) $(OBJECTS) $(PS_OBJECTS) $(LIBFT)
 	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(PS_OBJECTS) $(LIBRARIES) -o $(NAME_PS)
-	@echo "\n$(NAME_PS): $(GREEN)object files were created$(RESET)"
+	@echo "$(NAME_PS): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_PS): $(GREEN)$(NAME_PS) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
-	@echo "$(NAME_CH): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
+	@echo "$(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
 	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
 	@echo "$(GREEN).$(RESET)\c"
 
 $(LIBFT):
-	@echo "$(NAME_CH): $(GREEN)Creating $(LIBFT)...$(RESET)"
+	@echo "$(GREEN)Creating $(LIBFT)$(RESET)"
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 
 $(MINILIBX):
-	@echo "$(MINILIBX): $(GREEN)Creating $(MINILIBX)...$(RESET)"
+	@echo "MINILIBX: $(GREEN)Creating $(MINILIBX)$(RESET)"
 	@$(MAKE) -sC $(MINILIBX_DIRECTORY)
 
 clean:
@@ -119,7 +119,7 @@ fclean: clean
 	@rm -f $(LIBFT)
 	@echo "$(NAME_CH): $(RED)$(LIBFT) was deleted$(RESET)"
 	@rm -f $(MINILIBX)
-	@echo "$(MINILIBX): $(RED)$(MINILIBX) was deleted$(RESET)"
+	@echo "MINILIBX: $(RED)$(MINILIBX) was deleted$(RESET)"
 	@rm -f $(NAME_CH)
 	@echo "$(NAME_CH): $(RED)$(NAME_CH) was deleted$(RESET)"
 	@rm -f $(NAME_PS)
